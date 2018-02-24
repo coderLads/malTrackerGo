@@ -7,6 +7,8 @@
     <script>
         window.$ = window.jQuery = require('jquery');
     </script>
+    <script src="node_modules/jquery-tags-input/src/jquery.tagsinput.js"></script>
+    <link rel="stylesheet" type="text/css" href="node_modules/jquery-tags-input/src/jquery.tagsinput.css" />
     <link rel="stylesheet" href="default.css" />
     <script src="default.js"></script>
     <script>
@@ -74,15 +76,17 @@
             });
 
         }
+        $( document ).ready(function() {
+            $('#tagsFriends').tagsInput();
+        });
     </script>
 </head>
 
-<body>
-
+<body>  
+        <input name="tags" id="tagsFriends" value="Badtz13,Pandoes,Fandango86" />
+        <button onclick="loadRSS('Badtz13,PanDoes')">load</button>
+        <div id="display">
+        </div>
 </body>
-<button onclick="loadRSS('Badtz13,PanDoes')">load</button>
-<div id="display">
-
-</div>
 
 </html>
