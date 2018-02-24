@@ -95,11 +95,14 @@
 </head>
 
 <body>
-    <form>
-        <input name="tags" id="tagsFriends" value="Badtz13,Pandoes,Fandango86,crazyawesome" />
-    </form>
-    <button id="btnLoad" onclick="loadRSS($('form').serialize())">Load Feed</button>
-    <div id="display">
+    <div class="buffer"></div>
+    <div id="content">
+        <form>
+            <input name="tags" id="tagsFriends" value="Badtz13,Pandoes,Fandango86,crazyawesome" />
+        </form>
+        <button id="btnLoad" onclick="loadRSS($('form').serialize())">Refresh</button>
+        <div id="display">
+        </div>
     </div>
 </body>
 

@@ -13,7 +13,7 @@ function createWindow() {
     mainWindow = new BrowserWindow({
         width: 1000,
         height: 700,
-        frame: true,
+        frame: false,
         icon: __dirname + '/images/icon.png',
     })
 

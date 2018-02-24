@@ -11,7 +11,7 @@ body {
     background-attachment: fixed;
 }
 
-.content {
+#content {
     margin-left: 20px;
     margin-right: 20px;
 }
@@ -74,4 +74,9 @@ div.tagsinput span.tag a {
     height: 26px;
     margin-right: 5px;
     margin-top: -37px;
+}
+
+.buffer {
+    height: 15px;
+    -webkit-app-region: drag;
 }
