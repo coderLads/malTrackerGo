@@ -27,7 +27,7 @@
         function loadRSS(users) {
             users = users.split("=")[1];
             users = users.replace(/%2C/g, ",");
-            console.log(users);
+            console.log("Feed Loaded.");
 
             let RSSCombiner = require('rss-combiner');
             feedList = [];
@@ -77,7 +77,8 @@
                             a.setAttribute('target', "_blank");
 
                             var pubDate = document.createElement("div");
-                            pubDate.textContent = item.pubDate.split("-")[0];
+                            var d = new Date(item.pubDate.split("-")[0]);
+                            pubDate.textContent = d.toLocaleDateString() + " at " + d.toLocaleTimeString();
                             pubDate.setAttribute("class", "date");
 
                             var desc = document.createElement("p");
@@ -111,6 +112,7 @@
             document.getElementById("btnLoad").click();
 
             document.getElementById("btnSettings").addEventListener("click", function() {
+                document.body.style.overflow = "hidden";
                 document.getElementById("content").style.webkitFilter = "blur(2px) brightness(80%)";
                 $(".modal").show('clip', {}, 200);
             });
@@ -118,6 +120,7 @@
             document.getElementById("settingsModal").addEventListener("click", function(e) {
                 if (e.target !== this)
                     return;
+                document.body.style.overflow = "scroll";
                 document.getElementById("content").style.webkitFilter = "blur(0px) brightness(100%)";
                 $(".modal").hide('clip', {}, 200);
             });
