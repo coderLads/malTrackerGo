@@ -1,5 +1,6 @@
 html {
-    height: 100%;
+    background: linear-gradient(to bottom right, #43CBFF, #9708CC);
+    font-family: 'Open Sans', serif;
 }
 
 ::-webkit-scrollbar {
@@ -8,7 +9,6 @@ html {
 
 body {
     margin: 0;
-    background: linear-gradient(to bottom right, #43CBFF, #9708CC);
     height: 100%;
     margin: 0;
     background-repeat: no-repeat;
@@ -42,7 +42,7 @@ body {
 }
 
 .person {
-    margin-top: -18px;
+    margin-top: -21px;
 }
 
 .tagsinput {
@@ -51,6 +51,7 @@ body {
     min-height: 0px !important;
     height: unset !important;
     background: none!important;
+    font-family: 'Open Sans', serif!important;
 }
 
 .tag {
@@ -58,6 +59,7 @@ body {
     background: none !important;
     color: white !important;
     margin-top: 3px;
+    font-family: 'Open Sans', serif!important;
 }
 
 div.tagsinput span.tag a {

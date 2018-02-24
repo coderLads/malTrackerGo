@@ -9,6 +9,7 @@
     </script>
     <script src="node_modules/jquery-tags-input/src/jquery.tagsinput.js"></script>
     <link rel="stylesheet" type="text/css" href="node_modules/jquery-tags-input/src/jquery.tagsinput.css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <link rel="stylesheet" href="default.css" />
     <script src="default.js"></script>
     <script>
@@ -62,6 +63,7 @@
                             var a = document.createElement("a");
                             a.textContent = item.title;
                             a.setAttribute('href', item.link);
+                            a.setAttribute('target', "_blank");
 
                             var pubDate = document.createElement("div");
                             pubDate.textContent = item.pubDate.split("-")[0];
@@ -73,6 +75,7 @@
                             var person = document.createElement("a");
                             person.textContent = item.creator.split("=")[2];
                             person.setAttribute('class', "person");
+                            person.setAttribute('target', "_blank");
                             person.setAttribute("href", "https://myanimelist.net/profile/" + item.creator.split("=")[2]);
 
                             div.appendChild(a);
