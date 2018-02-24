@@ -83,6 +83,9 @@ div.tagsinput span.tag a {
     color: white;
     border: 1px solid white;
     height: 30px;
+    -webkit-transition-duration: 0.4s;
+    /* Safari */
+    transition-duration: 0.4s;
 }
 
 button#btnSettings {
@@ -100,4 +103,12 @@ button#btnSettings {
 
 div.tagsinput span.tag a {
     font-size: 13px;
+}
+
+select:active, select:hover, button:active, button:focus {
+    outline: none
+}
+
+#btnLoad:hover, button#btnSettings:hover {
+    background-color: rgba(255, 255, 255, 0.281);
 }
