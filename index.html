@@ -4,12 +4,58 @@
 <head>
     <meta charset="UTF-8">
     <title>malTrackerGo</title>
+    <script>
+        window.$ = window.jQuery = require('jquery');
+    </script>
     <link rel="stylesheet" href="default.css" />
     <script src="default.js"></script>
+    <script>
+        function loadRSS(user) {
+            itemList = [];
+            url = "https://myanimelist.net/rss.php?type=rw&u=" + user;
+            let Parser = require('rss-parser');
+            let parser = new Parser();
+
+            (async() => {
+                var content = document.getElementById("display");
+
+                let feed = await parser.parseURL(url);
+                console.log(feed.title);
+
+                feed.items.forEach(item => {
+                    console.log(item);
+                    var div = document.createElement("div");
+                    div.setAttribute('class', "item");
+
+                    var a = document.createElement("a");
+                    a.textContent = item.title;
+                    a.setAttribute('href', item.link);
+
+                    var pubDate = document.createElement("div");
+                    pubDate.textContent = item.pubDate.split("-")[0];
+                    pubDate.setAttribute("class", "date");
+
+                    var desc = document.createElement("p");
+                    desc.textContent = item.content;
+
+                    div.appendChild(a);
+                    div.appendChild(pubDate);
+                    div.appendChild(desc);
+                    content.appendChild(div);
+                });
+
+            })();
+
+        }
+    </script>
 </head>
 
 <body>
-    
+
 </body>
+<button onclick="loadRSS('Badtz13')">load</button>
+<div id="display">
+
+</div>
 
 </html>
