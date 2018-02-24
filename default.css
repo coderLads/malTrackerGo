@@ -71,15 +71,22 @@ div.tagsinput span.tag a {
     margin-top: 3px;
 }
 
-#btnLoad {
+.rightButtons {
+    float: right;
+    margin-right: 5px;
+    margin-top: -40px;
+}
+
+#btnLoad, #btnSettings {
     border-radius: 2px;
     background: none;
     color: white;
     border: 1px solid white;
-    float: right;
     height: 30px;
-    margin-right: 5px;
-    margin-top: -40px;
+}
+
+button#btnSettings {
+    width: 30px;
 }
 
 .buffer {
