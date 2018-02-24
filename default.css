@@ -1,14 +1,31 @@
+html {
+    height: 100%;
+}
+
 body {
     margin: 0;
+    background: linear-gradient(to bottom right, #43CBFF, #9708CC);
+    height: 100%;
+    margin: 0;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.content {
     margin-left: 20px;
     margin-right: 20px;
 }
 
 .item {
-    background-color: cornflowerblue;
+    background-color: rgba(0, 0, 0, 0.185);
     border-radius: 2px;
     padding: 5px;
     margin: 3px;
+}
+
+.item p {
+    width: 85%;
+    margin-bottom: 0px;
 }
 
 .item a, .item p, .item div {
@@ -29,11 +46,12 @@ body {
     border: none !important;
     min-height: 0px !important;
     height: unset !important;
+    background: none!important;
 }
 
 .tag {
-    border: none !important;
-    background: cornflowerblue !important;
+    border: 1px solid white !important;
+    background: none !important;
     color: white !important;
     margin-top: 3px;
 }
@@ -42,15 +60,16 @@ div.tagsinput span.tag a {
     color: white;
 }
 
-div.tagsinput span.tag a:hover {
-    color: lightcoral;
+.tagsFriends_tag, div.tagsinput input {
+    color: rgba(255, 255, 255, 0.466)!important;
+    margin-top: 3px;
 }
 
 #btnLoad {
     border-radius: 2px;
-    background: cornflowerblue;
+    background: none;
     color: white;
-    border: none;
+    border: 1px solid white;
     float: right;
     height: 26px;
     margin-right: 5px;

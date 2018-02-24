@@ -53,8 +53,9 @@
                         let feed = await parser.parseString(xml);
                         // console.log(feed.title);
 
+                        document.getElementById("display").innerHTML = "";
                         feed.items.forEach(item => {
-                            console.log(item);
+                            // console.log(item);
                             var div = document.createElement("div");
                             div.setAttribute('class', "item");
 
@@ -69,9 +70,10 @@
                             var desc = document.createElement("p");
                             desc.textContent = item.content;
 
-                            var person = document.createElement("div");
+                            var person = document.createElement("a");
                             person.textContent = item.creator.split("=")[2];
                             person.setAttribute('class', "person");
+                            person.setAttribute("href", "https://myanimelist.net/profile/" + item.creator.split("=")[2]);
 
                             div.appendChild(a);
                             div.appendChild(pubDate);
@@ -87,13 +89,14 @@
         }
         $(document).ready(function() {
             $('#tagsFriends').tagsInput();
+            document.getElementById("btnLoad").click();
         });
     </script>
 </head>
 
 <body>
     <form>
-        <input name="tags" id="tagsFriends" value="Badtz13,Pandoes,Fandango86" />
+        <input name="tags" id="tagsFriends" value="Badtz13,Pandoes,Fandango86,crazyawesome" />
     </form>
     <button id="btnLoad" onclick="loadRSS($('form').serialize())">Load Feed</button>
     <div id="display">
