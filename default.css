@@ -29,6 +29,7 @@ body {
     border: none !important;
     background: cornflowerblue !important;
     color: white !important;
+    margin-top: 3px;
 }
 
 div.tagsinput span.tag a {
@@ -37,5 +38,16 @@ div.tagsinput span.tag a {
 
 div.tagsinput span.tag a:hover {
     color: lightcoral;
+}
+
+#btnLoad {
+    -webkit-border-radius: 4px;
+    margin-left: 5px;
+    width: 100px;
+    height: 31px;
+    background: cornflowerblue;
+    color: white;
+    font-size: 21px;
+    border: none;
 }
 
