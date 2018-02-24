@@ -47,7 +47,7 @@ body {
 }
 
 .tagsinput {
-    width: calc(100% - 10px) !important;
+    width: calc(90% - 10px) !important;
     border: none !important;
     min-height: 0px !important;
     height: unset !important;
