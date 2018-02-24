@@ -7,10 +7,19 @@
     <script>
         window.$ = window.jQuery = require('jquery');
     </script>
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+    <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
+
     <script src="node_modules/jquery-tags-input/src/jquery.tagsinput.js"></script>
     <link rel="stylesheet" type="text/css" href="node_modules/jquery-tags-input/src/jquery.tagsinput.css" />
+
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+    <script src="scripts/jscolor.js"></script>
+
     <link rel="stylesheet" href="default.css" />
     <script src="default.js"></script>
 
@@ -92,10 +101,26 @@
             });
         }
 
+        function applySettings(color1, color2) {
+            document.getElementsByTagName("html")[0].style.background = "linear-gradient(to bottom right, #" + color1 + ",#" + color2 + ")";
+        }
         //document ready
         $(document).ready(function() {
             $('#tagsFriends').tagsInput();
+
             document.getElementById("btnLoad").click();
+
+            document.getElementById("btnSettings").addEventListener("click", function() {
+                document.getElementById("content").style.webkitFilter = "blur(2px) brightness(80%)";
+                $(".modal").show('clip', {}, 200);
+            });
+
+            document.getElementById("settingsModal").addEventListener("click", function(e) {
+                if (e.target !== this)
+                    return;
+                document.getElementById("content").style.webkitFilter = "blur(0px) brightness(100%)";
+                $(".modal").hide('clip', {}, 200);
+            });
         });
     </script>
 </head>
@@ -113,6 +138,19 @@
         <div id="display">
         </div>
     </div>
+
+    <!-- modal code -->
+    <div id="settingsModal" style="display:none" class="modal">
+        <div class="modalContent modal">
+            stuff goes here
+            <form id="settingsForm">
+                <input type="text" id="color1" class="jscolor" />
+                <input type="text" id="color2" class="jscolor" />
+            </form>
+            <button id="settingsSubmit" onclick="applySettings($('#color1').val(),$('#color2').val())">Save</button>
+        </div>
+    </div>
+
 </body>
 
 <script>
