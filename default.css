@@ -24,3 +24,18 @@ body {
     min-height: 0px !important;
     height: unset !important;
 }
+
+.tag {
+    border: none !important;
+    background: cornflowerblue !important;
+    color: white !important;
+}
+
+div.tagsinput span.tag a {
+    color: white;
+}
+
+div.tagsinput span.tag a:hover {
+    color: lightcoral;
+}
+
