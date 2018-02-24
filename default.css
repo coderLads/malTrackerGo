@@ -10,7 +10,6 @@ html {
 body {
     margin: 0;
     height: 100%;
-    margin: 0;
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
@@ -18,12 +17,13 @@ body {
 #content {
     margin-left: 20px;
     margin-right: 20px;
+    overflow: auto;
 }
 
 .item {
     background-color: rgba(0, 0, 0, 0.185);
     border-radius: 2px;
-    padding: 5px;
+    padding: 15px;
     margin: 3px;
 }
 
@@ -83,6 +83,10 @@ div.tagsinput span.tag a {
 }
 
 .buffer {
+    /* border: 1px solid white; */
+    top: 0;
     height: 15px;
+    width: 100%;
+    /* position: fixed; */
     -webkit-app-region: drag;
 }
