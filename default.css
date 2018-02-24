@@ -78,7 +78,7 @@ div.tagsinput span.tag a {
     margin-top: -40px;
 }
 
-#btnLoad, #btnSettings {
+#btnLoad, #btnSettings, button {
     border-radius: 2px;
     background: none;
     color: white;
@@ -110,7 +110,7 @@ select:active, select:hover, button:active, button:focus {
     outline: none
 }
 
-#btnLoad:hover, button#btnSettings:hover {
+#btnLoad:hover, button#btnSettings:hover, button:hover {
     background-color: rgba(255, 255, 255, 0.281);
 }
 
@@ -133,4 +133,22 @@ select:active, select:hover, button:active, button:focus {
     position: fixed;
     width: 100%;
     height: 100%;
+}
+
+.jscolor {
+    border: 1px solid white;
+    border-radius: 2px;
+    text-align: center;
+    height: 24px;
+}
+
+p.modalHeader {
+    padding: 5px;
+    font-family: 'Open Sans', serif;
+    margin: 0px;
+    margin-bottom: 20px;
+}
+
+button#settingsSubmit {
+    margin-top: 40px;
 }
