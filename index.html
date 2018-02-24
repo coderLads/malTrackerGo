@@ -25,6 +25,28 @@
 
     <script type="text/javascript">
         function loadRSS(users) {
+            var ptw = false;
+            var cpl = true;
+            var oh = false;
+            var d = false;
+            var w = false;
+            var activeStatuses = [];
+
+            if (ptw) {
+                activeStatuses.push("Plan to Watch");
+            }
+            if (cpl) {
+                activeStatuses.push("Completed");
+            }
+            if (oh) {
+                activeStatuses.push("On-hold");
+            }
+            if (d) {
+                activeStatuses.push("Dropped");
+            }
+            if (w) {
+                activeStatuses.push("Watching");
+            }
             users = users.split("=")[1];
             users = users.replace(/%2C/g, ",");
             console.log("Feed Loaded.");
@@ -66,43 +88,53 @@
                         // console.log(feed.title);
 
                         document.getElementById("display").innerHTML = "";
+
+                        console.log(activeStatuses);
                         feed.items.forEach(item => {
-                            // console.log(item);
-                            var div = document.createElement("div");
-                            div.setAttribute('class', "item");
+                            var status = item.content.split(" - ")[0];
+                            console.log(status);
+                            if (activeStatuses.includes(status)) {
+                                // console.log(item);
+                                var div = document.createElement("div");
+                                div.setAttribute('class', "item");
 
-                            var a = document.createElement("a");
-                            a.textContent = item.title;
-                            a.setAttribute('href', item.link);
-                            a.setAttribute('target', "_blank");
+                                var a = document.createElement("a");
+                                a.textContent = item.title;
+                                a.setAttribute('href', item.link);
+                                a.setAttribute('target', "_blank");
 
-                            var pubDate = document.createElement("div");
-                            var d = new Date(item.pubDate.split("-")[0]);
-                            pubDate.textContent = d.toLocaleDateString() + " at " + d.toLocaleTimeString();
-                            pubDate.setAttribute("class", "date");
+                                var pubDate = document.createElement("div");
+                                var d = new Date(item.pubDate.split("-")[0]);
+                                pubDate.textContent = d.toLocaleDateString() + " at " + d.toLocaleTimeString();
+                                pubDate.setAttribute("class", "date");
 
-                            var desc = document.createElement("p");
-                            desc.textContent = item.content;
+                                var desc = document.createElement("p");
+                                desc.textContent = item.content;
 
-                            var person = document.createElement("a");
-                            person.textContent = item.creator.split("=")[2];
-                            person.setAttribute('class', "person");
-                            person.setAttribute('target', "_blank");
-                            person.setAttribute("href", "https://myanimelist.net/profile/" + item.creator.split("=")[2]);
+                                var person = document.createElement("a");
+                                person.textContent = item.creator.split("=")[2];
+                                person.setAttribute('class', "person");
+                                person.setAttribute('target', "_blank");
+                                person.setAttribute("href", "https://myanimelist.net/profile/" + item.creator.split("=")[2]);
 
-                            div.appendChild(a);
-                            div.appendChild(pubDate);
-                            div.appendChild(desc);
-                            div.appendChild(person);
-                            content.appendChild(div);
+                                div.appendChild(a);
+                                div.appendChild(pubDate);
+                                div.appendChild(desc);
+                                div.appendChild(person);
+                                content.appendChild(div);
+                            }
                         });
-
+                        if (window.innerHeight > document.body.clientHeight) {
+                            document.getElementsByTagName("html")[0].style.height = "100%";
+                        } else {
+                            document.getElementsByTagName("html")[0].style.height = "";
+                        }
                     })();
                 }
             });
         }
 
-        function applySettings(color1, color2) {
+        function applySettings(color1, color2, ptw, cpl, oh, d) {
             document.getElementsByTagName("html")[0].style.background = "linear-gradient(to bottom right, #" + color1 + ",#" + color2 + ")";
         }
         //document ready
@@ -146,11 +178,20 @@
     <div id="settingsModal" style="display:none" class="modal">
         <div class="modalContent modal">
             <p class="modalHeader">Settings</p>
-            <form id="settingsForm">
-                <input type="text" id="color1" class="jscolor" />
-                <input type="text" id="color2" class="jscolor" />
-            </form>
-            <button id="settingsSubmit" onclick="applySettings($('#color1').val(),$('#color2').val())">Save</button>
+
+            <input type="text" id="color1" class="jscolor" />
+            <input type="text" id="color2" class="jscolor" />
+            <div class="checkboxContainer">
+                <input type="checkbox" id="ptw" class="checkbox" />
+                <p class="label"> Plan to watch</p>
+                <input type="checkbox" id="cpl" class="checkbox" />
+                <p class="label">Completed</p>
+                <input type="checkbox" id="oh" class="checkbox" />
+                <p class="label">On hold</p>
+                <input type="checkbox" id="d" class="checkbox" />
+                <p class="label">Dropped</p>
+            </div>
+            <button id="settingsSubmit" onclick="applySettings($('#color1').val(),$('#color2').val(),$('#ptw').val(),$('#cpl').val(),$('#oh').val(),$('#d').val())">Save</button>
         </div>
     </div>
 

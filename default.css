@@ -116,7 +116,7 @@ select:active, select:hover, button:active, button:focus {
 
 .modalContent {
     width: 70%;
-    height: 200px;
+    height: 40%;
     margin-left: 15%;
     margin-top: 25%;
     border: 1px solid white;
@@ -149,6 +149,23 @@ p.modalHeader {
     margin-bottom: 20px;
 }
 
-button#settingsSubmit {
-    margin-top: 40px;
+.checkboxContainer {
+    margin-top: 20px;
+    margin-left: 5%;
+    width: 90%;
+}
+
+input[type="checkbox"] {
+    display: block;
+    margin-bottom: -20px;
+    height: 20px;
+    width: 20px;
+}
+
+p.label {
+    padding: 0px;
+    margin: 0px;
+    margin-left: 25px;
+    width: 120px;
+    height: 20px;
 }
