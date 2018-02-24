@@ -27,7 +27,7 @@
                 feedList.push(url + user);
             });
 
-            console.log(feedList);
+            // console.log(feedList);
 
             var feedConfig = {
                 size: 20,
@@ -51,7 +51,7 @@
                         var content = document.getElementById("display");
 
                         let feed = await parser.parseString(xml);
-                        console.log(feed.title);
+                        // console.log(feed.title);
 
                         feed.items.forEach(item => {
                             console.log(item);
@@ -69,9 +69,14 @@
                             var desc = document.createElement("p");
                             desc.textContent = item.content;
 
+                            var person = document.createElement("div");
+                            person.textContent = item.creator.split("=")[2];
+                            person.setAttribute('class', "person");
+
                             div.appendChild(a);
                             div.appendChild(pubDate);
                             div.appendChild(desc);
+                            div.appendChild(person);
                             content.appendChild(div);
                         });
 
