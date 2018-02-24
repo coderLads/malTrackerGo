@@ -12,7 +12,8 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <link rel="stylesheet" href="default.css" />
     <script src="default.js"></script>
-    <script>
+
+    <script type="text/javascript">
         function loadRSS(users) {
             users = users.split("=")[1];
             users = users.replace(/%2C/g, ",");
@@ -88,8 +89,9 @@
                     })();
                 }
             });
-
         }
+
+        //document ready
         $(document).ready(function() {
             $('#tagsFriends').tagsInput();
             document.getElementById("btnLoad").click();
@@ -108,5 +110,23 @@
         </div>
     </div>
 </body>
+<script>
+    function refresh() {
+        clearTimeout(timer);
+        timer = setTimeout(function() {
+            document.getElementById("btnLoad").click()
+            refresh();
+        }, 5000);
+        // console.log("refreshed");
+    };
+
+    timer = setTimeout(function() {
+        document.getElementById("btnLoad").click();
+    }, 5000);
+
+
+
+    $(document).on('keypress, click, mousemove', refresh);
+</script>
 
 </html>
