@@ -13,6 +13,10 @@
     <script src="default.js"></script>
     <script>
         function loadRSS(users) {
+            users = users.split("=")[1];
+            users = users.replace(/%2C/g, ",");
+            console.log(users);
+
             let RSSCombiner = require('rss-combiner');
             feedList = [];
             url = "https://myanimelist.net/rss.php?type=rw&u="
@@ -76,17 +80,19 @@
             });
 
         }
-        $( document ).ready(function() {
+        $(document).ready(function() {
             $('#tagsFriends').tagsInput();
         });
     </script>
 </head>
 
-<body>  
+<body>
+    <form>
         <input name="tags" id="tagsFriends" value="Badtz13,Pandoes,Fandango86" />
-        <button onclick="loadRSS('Badtz13,PanDoes')">load</button>
-        <div id="display">
-        </div>
+    </form>
+    <button onclick="loadRSS($('form').serialize())">load</button>
+    <div id="display">
+    </div>
 </body>
 
 </html>
