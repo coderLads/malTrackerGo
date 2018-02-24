@@ -110,22 +110,25 @@
         </div>
     </div>
 </body>
+
 <script>
+    // code for auto pull feed
+
+    // resets the timer
     function refresh() {
         clearTimeout(timer);
         timer = setTimeout(function() {
             document.getElementById("btnLoad").click()
             refresh();
         }, 5000);
-        // console.log("refreshed");
     };
 
+    // creates the timer
     timer = setTimeout(function() {
         document.getElementById("btnLoad").click();
     }, 5000);
 
-
-
+    // calls reset timer function if user is active 
     $(document).on('keypress, click, mousemove', refresh);
 </script>
 
