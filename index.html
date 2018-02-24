@@ -7,58 +7,82 @@
     <script>
         window.$ = window.jQuery = require('jquery');
     </script>
-    <script src="node_modules/jquery-tags-input/src/jquery.tagsinput.js"></script>
-    <link rel="stylesheet" type="text/css" href="node_modules/jquery-tags-input/src/jquery.tagsinput.css" />
     <link rel="stylesheet" href="default.css" />
     <script src="default.js"></script>
     <script>
-        function loadRSS(user) {
-            itemList = [];
-            url = "https://myanimelist.net/rss.php?type=rw&u=" + user;
-            let Parser = require('rss-parser');
-            let parser = new Parser();
+        function loadRSS(users) {
+            let RSSCombiner = require('rss-combiner');
+            feedList = [];
+            url = "https://myanimelist.net/rss.php?type=rw&u="
 
-            (async() => {
-                var content = document.getElementById("display");
+            users = users.split(",");
 
-                let feed = await parser.parseURL(url);
-                console.log(feed.title);
+            users.forEach(user => {
+                feedList.push(url + user);
+            });
 
-                feed.items.forEach(item => {
-                    console.log(item);
-                    var div = document.createElement("div");
-                    div.setAttribute('class', "item");
+            console.log(feedList);
 
-                    var a = document.createElement("a");
-                    a.textContent = item.title;
-                    a.setAttribute('href', item.link);
+            var feedConfig = {
+                size: 20,
+                feeds: feedList,
+                pubDate: new Date()
+            };
 
-                    var pubDate = document.createElement("div");
-                    pubDate.textContent = item.pubDate.split("-")[0];
-                    pubDate.setAttribute("class", "date");
+            var xml;
 
-                    var desc = document.createElement("p");
-                    desc.textContent = item.content;
+            RSSCombiner(feedConfig, function(err, combinedFeed) {
+                if (err) {
+                    console.error(err);
+                } else {
+                    xml = combinedFeed.xml({
+                        indent: true
+                    });
+                    let Parser = require('rss-parser');
+                    let parser = new Parser();
 
-                    div.appendChild(a);
-                    div.appendChild(pubDate);
-                    div.appendChild(desc);
-                    content.appendChild(div);
-                });
+                    (async() => {
+                        var content = document.getElementById("display");
 
-            })();
+                        let feed = await parser.parseString(xml);
+                        console.log(feed.title);
+
+                        feed.items.forEach(item => {
+                            console.log(item);
+                            var div = document.createElement("div");
+                            div.setAttribute('class', "item");
+
+                            var a = document.createElement("a");
+                            a.textContent = item.title;
+                            a.setAttribute('href', item.link);
+
+                            var pubDate = document.createElement("div");
+                            pubDate.textContent = item.pubDate.split("-")[0];
+                            pubDate.setAttribute("class", "date");
+
+                            var desc = document.createElement("p");
+                            desc.textContent = item.content;
+
+                            div.appendChild(a);
+                            div.appendChild(pubDate);
+                            div.appendChild(desc);
+                            content.appendChild(div);
+                        });
+
+                    })();
+                }
+            });
 
         }
-        $( document ).ready(function() {
-            $('#tags').tagsInput();
-        });
     </script>
 </head>
 
 <body>
-    <input name="tags" id="tags" value="foo,bar,baz" />
-    <button onclick="loadRSS('Badtz13')">load</button>
-    <div id="display">
-    </div>
+
 </body>
+<button onclick="loadRSS('Badtz13,PanDoes')">load</button>
+<div id="display">
+
+</div>
+
 </html>
