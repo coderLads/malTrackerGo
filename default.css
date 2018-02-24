@@ -3,7 +3,7 @@ html {
     font-family: 'Open Sans', serif;
 }
 
-::-webkit-scrollbar {
+ ::-webkit-scrollbar {
     display: none;
 }
 
@@ -77,9 +77,9 @@ div.tagsinput span.tag a {
     color: white;
     border: 1px solid white;
     float: right;
-    height: 26px;
+    height: 30px;
     margin-right: 5px;
-    margin-top: -37px;
+    margin-top: -40px;
 }
 
 .buffer {
@@ -89,4 +89,8 @@ div.tagsinput span.tag a {
     width: 100%;
     /* position: fixed; */
     -webkit-app-region: drag;
+}
+
+div.tagsinput span.tag a {
+    font-size: 13px;
 }
