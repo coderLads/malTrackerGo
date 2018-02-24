@@ -29,7 +29,7 @@
             var cpl = true;
             var oh = false;
             var d = false;
-            var w = false;
+            var w = true;
             var activeStatuses = [];
 
             if (ptw) {
@@ -124,7 +124,7 @@
                                 content.appendChild(div);
                             }
                         });
-                        if (window.innerHeight > document.body.clientHeight) {
+                        if (window.innerHeight > document.getElementById("content").clientHeight + 100) {
                             document.getElementsByTagName("html")[0].style.height = "100%";
                         } else {
                             document.getElementsByTagName("html")[0].style.height = "";
