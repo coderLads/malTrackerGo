@@ -40,30 +40,28 @@
         var firstColor = "#43CBFF";
         var secondColor = "#9708CC";
         var i = null;
-        
-        function assignSettings(){
-            fs.readFile(pathSet, 'utf-8', (err, data) => {
-                console.log("settings: \n" + data);
-                setFull = data.split("\n");
-                setStatuses = setFull[0].split(",");
-                setColors = setFull[1].split(",");
-                for(i=0; i<5; ++i){
-                    if(setStatuses[i] == "true"){
-                        setStatuses[i] = 1;
-                    } else{
-                        setStatuses[i] = 0;
-                    }
+        fs.readFile(pathSet, 'utf-8', (err, data) => {
+            console.log("settings: \n" + data);
+            setFull = data.split("\n");
+            setStatuses = setFull[0].split(",");
+            setColors = setFull[1].split(",");
+            for(i=0; i<5; ++i){
+                if(setStatuses[i] == "true"){
+                    setStatuses[i] = 1;
+                } else{
+                    setStatuses[i] = 0;
                 }
-                cpl = setStatuses[0];
-                w   = setStatuses[1];
-                ptw = setStatuses[2];
-                oh  = setStatuses[3];
-                d   = setStatuses[4];
-                firstColor = setColors[0];
-                secondColor = setColors[1];
-                $('#tagsFriends').importTags(setFull[3]);
-            });
-        }
+            }
+            cpl = setStatuses[0];
+            w   = setStatuses[1];
+            ptw = setStatuses[2];
+            oh  = setStatuses[3];
+            d   = setStatuses[4];
+            firstColor = setColors[0];
+            secondColor = setColors[1];
+            feedSize = parseInt(setFull[2].split(",")[0]);
+            $('#tagsFriends').importTags(setFull[3]);
+        });
 
         document.getElementsByTagName("html")[0].style.background = "linear-gradient(to bottom right," + firstColor + "," + secondColor + ")";
 
@@ -187,8 +185,6 @@
         // document ready
         $(document).ready(function() {
             $('#tagsFriends').tagsInput();
-
-            assignSettings();
 
             document.getElementById("btnLoad").click();
 
