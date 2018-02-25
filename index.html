@@ -257,6 +257,7 @@
                 if (e.target !== this)
                     return;
                 document.body.style.overflow = "scroll";
+                document.getElementsByTagName("html")[0].style.background = "linear-gradient(to bottom right,#" + firstColor.split("#")[1] + ",#" + secondColor.split("#")[1] + ")";
                 document.getElementById("content").style.webkitFilter = "blur(0px) brightness(100%)";
                 $(".modal").hide('clip', {}, 200);
             });
