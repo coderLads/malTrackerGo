@@ -183,6 +183,14 @@
             document.getElementById("btnLoad").click();
             document.getElementById("settingsModal").click();
         }
+
+        // setup auto color update in settings
+        function previewColors() {
+            var pre1 = $('#color1').val();
+            var pre2 = $('#color2').val();
+            document.getElementsByTagName("html")[0].style.background = "linear-gradient(to bottom right, #" + pre1 + ",#" + pre2 + ")";
+        }
+
         // document ready setup
         $(document).ready(function() {
             // setup tag input
@@ -277,8 +285,8 @@
         <div class="modalContent modal">
             <p class="modalHeader">Settings</p>
 
-            <input type="text" id="color1" class="jscolor" />
-            <input type="text" id="color2" class="jscolor" />
+            <input type="text" id="color1" class="jscolor {onFineChange:'previewColors()'}" />
+            <input type="text" id="color2" class="jscolor {onFineChange:'previewColors()'}" />
             <div class="checkboxContainer">
 
                 <input type="checkbox" id="cpl" class="checkbox" />
