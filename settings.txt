@@ -1,4 +1,4 @@
 true,true,false,true,false,
-#333333,#9708CC,
+333333,9708CC,
 10,
-Badtz13,PanDoes,Fandango86
+Badtz13,PanDoes,Fandango86,miyukimagic,
