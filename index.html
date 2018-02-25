@@ -25,6 +25,12 @@
 
     <script type="text/javascript">
         // setup global variables 
+        var fs = require('fs'); // File systems
+        var path = require('path');
+        var pathSet = path.join(__dirname, 'settings.txt'); // Path to the settings file
+        var setFull = null;
+        var setStatuses = null;
+        var setColors = null;
         var ptw = false;
         var cpl = true;
         var oh = false;
@@ -32,6 +38,31 @@
         var w = true;
         var firstColor = "#43CBFF";
         var secondColor = "#9708CC";
+        var i = null;
+        
+        function assignSettings(){
+            fs.readFile(pathSet, 'utf-8', (err, data) => {
+                console.log("settings: \n" + data);
+                setFull = data.split("\n");
+                setStatuses = setFull[0].split(",");
+                setColors = setFull[1].split(",");
+                for(i=0; i<5; ++i){
+                    if(setStatuses[i] == "true"){
+                        setStatuses[i] = 1;
+                    } else{
+                        setStatuses[i] = 0;
+                    }
+                }
+                cpl = setStatuses[0];
+                w   = setStatuses[1];
+                ptw = setStatuses[2];
+                oh  = setStatuses[3];
+                d   = setStatuses[4];
+                firstColor = setColors[0];
+                secondColor = setColors[1];
+                $('#tagsFriends').importTags(setFull[3]);
+            });
+        }
 
         document.getElementsByTagName("html")[0].style.background = "linear-gradient(to bottom right," + firstColor + "," + secondColor + ")";
 
@@ -56,7 +87,7 @@
 
             users = users.split("=")[1];
             users = users.replace(/%2C/g, ",");
-            console.log("Feed Loaded.");
+            //console.log("Feed Loaded.");
 
             let RSSCombiner = require('rss-combiner');
             feedList = [];
@@ -155,6 +186,8 @@
         $(document).ready(function() {
             $('#tagsFriends').tagsInput();
 
+            assignSettings();
+
             document.getElementById("btnLoad").click();
 
             document.getElementById("btnSettings").addEventListener("click", function() {
@@ -188,7 +221,7 @@
     <div class="buffer"></div>
     <div id="content">
         <form>
-            <input name="tags" id="tagsFriends" value="Badtz13,Pandoes,Fandango86,crazyawesome" />
+            <input name="tags" id="tagsFriends" value="Badtz13,PanDoes,Fandango86,crazyawesome" />
         </form>
         <div class="rightButtons">
             <button id="btnLoad" onclick="loadRSS($('form').serialize())">Refresh</button>
