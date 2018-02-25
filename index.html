@@ -77,7 +77,7 @@
             users = users.split("=")[1];
             users = users.replace(/%2C/g, ",");
             feedList = [];
-            url = "https://myanimelist.net/rss.php?type=rwe&u="
+            url = "https://myanimelist.net/rss.php?type=rw&u="
             users = users.split(",");
             users.forEach(user => {
                 feedList.push(url + user);
