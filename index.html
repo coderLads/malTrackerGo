@@ -162,7 +162,10 @@
             $("#feedSize").slider({
                 min: 5,
                 max: 100,
-                step: 1
+                step: 1,
+                slide: function(event, ui) {
+                    $('#sliderDisplay').html(ui.value);
+                }
             });
 
             document.getElementById("btnSettings").addEventListener("click", function() {
@@ -177,6 +180,7 @@
                 document.getElementById("color2").jscolor.fromString(secondColor.split("#")[1]);
 
                 $("#feedSize").slider("value", feedSize);
+                $('#sliderDisplay').html(feedSize);
 
                 document.body.style.overflow = "hidden";
                 document.getElementById("content").style.webkitFilter = "blur(2px) brightness(80%)";
@@ -234,6 +238,7 @@
 
             </div>
             <div id="feedSize"></div>
+            <div id="sliderDisplay"></div>
             <button id="settingsSubmit" onclick="applySettings($('#color1').val(),$('#color2').val(),$('#ptw').prop('checked'),$('#cpl').prop('checked'),$('#oh').prop('checked'),$('#d').prop('checked'),$('#w').prop('checked'),$('#feedSize').slider('option','value'))">Save</button>
         </div>
     </div>

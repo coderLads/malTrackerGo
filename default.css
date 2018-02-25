@@ -169,3 +169,34 @@ p.label {
     width: 120px;
     height: 20px;
 }
+
+.ui-widget.ui-widget-content {
+    border: 1px solid white;
+    width: 100px;
+    background: none;
+    border-radius: 2px;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, .ui-state-focus {
+    border: 1px solid white!important;
+    background: white;
+    font-weight: normal;
+    border-radius: 2px;
+}
+
+.ui-slider-handle {
+    outline: none;
+}
+
+#feedSize {
+    float: right;
+    margin-right: 8%;
+    margin-top: -110px;
+}
+
+div#sliderDisplay {
+    float: right;
+    margin-right: 8%;
+    padding-right: 40px;
+    margin-top: -90px;
+}
