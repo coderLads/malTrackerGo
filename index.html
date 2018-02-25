@@ -139,8 +139,17 @@
             });
         }
 
-        function applySettings(color1, color2, ptw, cpl, oh, d, w) {
+        function applySettings(color1, color2, fptw, fcpl, foh, fd, fw) {
+            ptw = fptw;
+            cpl = fcpl;
+            oh = foh;
+            d = fd;
+            w = fw;
+            firstColor = "#" + color1;
+            secondColor = "#" + color2;
             document.getElementsByTagName("html")[0].style.background = "linear-gradient(to bottom right, #" + color1 + ",#" + color2 + ")";
+            document.getElementById("btnLoad").click();
+            document.getElementById("settingsModal").click();
         }
         //document ready
         $(document).ready(function() {
@@ -206,7 +215,7 @@
                 <p class="label">Dropped</p>
 
             </div>
-            <button id="settingsSubmit" onclick="applySettings($('#color1').val(),$('#color2').val(),$('#ptw').val(),$('#cpl').val(),$('#oh').val(),$('#d').val(),$('#w').val())">Save</button>
+            <button id="settingsSubmit" onclick="applySettings($('#color1').val(),$('#color2').val(),$('#ptw').prop('checked'),$('#cpl').prop('checked'),$('#oh').prop('checked'),$('#d').prop('checked'),$('#w').prop('checked'))">Save</button>
         </div>
     </div>
 
