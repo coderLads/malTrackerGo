@@ -30,6 +30,7 @@
         var oh = false;
         var d = false;
         var w = true;
+        var feedSize = 15;
         var firstColor = "#43CBFF";
         var secondColor = "#9708CC";
 
@@ -71,7 +72,7 @@
             // console.log(feedList);
 
             var feedConfig = {
-                size: 50,
+                size: feedSize,
                 feeds: feedList,
                 pubDate: new Date()
             };
@@ -129,7 +130,7 @@
                                 content.appendChild(div);
                             }
                         });
-                        if (window.innerHeight > document.getElementById("content").clientHeight + 100) {
+                        if (window.innerHeight > document.getElementById("content").clientHeight) {
                             document.getElementsByTagName("html")[0].style.height = "100%";
                         } else {
                             document.getElementsByTagName("html")[0].style.height = "";
@@ -139,12 +140,13 @@
             });
         }
         // apply settings changes
-        function applySettings(color1, color2, fptw, fcpl, foh, fd, fw) {
+        function applySettings(color1, color2, fptw, fcpl, foh, fd, fw, ffeedSize) {
             ptw = fptw;
             cpl = fcpl;
             oh = foh;
             d = fd;
             w = fw;
+            feedSize = ffeedSize;
             firstColor = "#" + color1;
             secondColor = "#" + color2;
             document.getElementsByTagName("html")[0].style.background = "linear-gradient(to bottom right, #" + color1 + ",#" + color2 + ")";
@@ -157,6 +159,12 @@
 
             document.getElementById("btnLoad").click();
 
+            $("#feedSize").slider({
+                min: 5,
+                max: 100,
+                step: 1
+            });
+
             document.getElementById("btnSettings").addEventListener("click", function() {
 
                 $('#ptw').prop('checked', ptw);
@@ -167,6 +175,8 @@
 
                 document.getElementById("color1").jscolor.fromString(firstColor.split("#")[1]);
                 document.getElementById("color2").jscolor.fromString(secondColor.split("#")[1]);
+
+                $("#feedSize").slider("value", feedSize);
 
                 document.body.style.overflow = "hidden";
                 document.getElementById("content").style.webkitFilter = "blur(2px) brightness(80%)";
@@ -223,7 +233,8 @@
                 <p class="label">Dropped</p>
 
             </div>
-            <button id="settingsSubmit" onclick="applySettings($('#color1').val(),$('#color2').val(),$('#ptw').prop('checked'),$('#cpl').prop('checked'),$('#oh').prop('checked'),$('#d').prop('checked'),$('#w').prop('checked'))">Save</button>
+            <div id="feedSize"></div>
+            <button id="settingsSubmit" onclick="applySettings($('#color1').val(),$('#color2').val(),$('#ptw').prop('checked'),$('#cpl').prop('checked'),$('#oh').prop('checked'),$('#d').prop('checked'),$('#w').prop('checked'),$('#feedSize').slider('option','value'))">Save</button>
         </div>
     </div>
 
