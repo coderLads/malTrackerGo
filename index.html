@@ -24,12 +24,15 @@
     <script src="default.js"></script>
 
     <script type="text/javascript">
-        // setup global variables 
+        // require dependencies
         const fs = require('fs'); // File systems
         const util = require('util');
         const path = require('path');
+        const RSSCombiner = require('rss-combiner');
         const readFile = util.promisify(fs.readFile);
+        const Parser = require('rss-parser');
 
+        // setup global variables 
         var pathSet = path.join(__dirname, 'settings.txt'); // Path to the settings file
         var setFull = null;
         var setStatuses = null;
@@ -44,17 +47,16 @@
         var secondColor = "";
         var i = null;
 
+        // create async function to get data from settings file with a promise
         async function getData() {
             return await readFile(pathSet, 'utf-8');
         }
 
-
-        document.getElementsByTagName("html")[0].style.background = "linear-gradient(to bottom right," + firstColor + "," + secondColor + ")";
-
+        // load merged rss feed of the given users
         function loadRSS(users) {
 
+            // create list of non filtered statuses
             var activeStatuses = [];
-
             if (ptw) {
                 activeStatuses.push("Plan to Watch");
             }
@@ -71,47 +73,55 @@
                 activeStatuses.push("Watching");
             }
 
+            // create list of rss feeds from usernames
             users = users.split("=")[1];
             users = users.replace(/%2C/g, ",");
-
-            let RSSCombiner = require('rss-combiner');
             feedList = [];
             url = "https://myanimelist.net/rss.php?type=rwe&u="
-
             users = users.split(",");
-
             users.forEach(user => {
                 feedList.push(url + user);
             });
 
+            // create config for rss combiner
             var feedConfig = {
-                size: feedSize,
+                size: 1000,
                 feeds: feedList,
                 pubDate: new Date()
             };
 
-            var xml;
-
+            // combine feeds
             RSSCombiner(feedConfig, function(err, combinedFeed) {
                 if (err) {
                     console.error(err);
                 } else {
-                    xml = combinedFeed.xml({
+                    var xml = combinedFeed.xml({
                         indent: true
                     });
-                    let Parser = require('rss-parser');
                     let parser = new Parser();
 
+                    // after the feeds are parsed together...
                     (async() => {
-                        var content = document.getElementById("display");
+                        var content = document.getElementById("display"); // main containing div
 
                         let feed = await parser.parseString(xml);
 
-                        document.getElementById("display").innerHTML = "";
+                        document.getElementById("display").innerHTML = ""; // clear old feed display
 
-                        feed.items.forEach(item => {
+                        var matchCount = 0; // keeps track of the number of filter matching items
+
+                        for (var i = 0; i < feed.items.length; i++) { // loop through all feed items
+                            var item = feed.items[i];
+
+                            // check if the feed item matches filters
                             var status = item.content.split(" - ")[0];
                             if (activeStatuses.includes(status)) {
+
+                                if (matchCount == feedSize) { // if max feed size is hit, break
+                                    break;
+                                }
+
+                                // create feed item element
                                 var div = document.createElement("div");
                                 div.setAttribute('class', "item");
 
@@ -139,8 +149,11 @@
                                 div.appendChild(desc);
                                 div.appendChild(person);
                                 content.appendChild(div);
+                                matchCount++;
                             }
-                        });
+
+                        }
+                        // fix background gradient on less items than fill screen
                         if (window.innerHeight > document.getElementById("content").clientHeight) {
                             document.getElementsByTagName("html")[0].style.height = "100%";
                         } else {
@@ -150,7 +163,7 @@
                 }
             });
         }
-        // apply settings changes
+        // apply changes to settings, and store them in settings file
         function applySettings(color1, color2, fptw, fcpl, foh, fd, fw, ffeedSize) {
             ptw = fptw;
             cpl = fcpl;
@@ -164,10 +177,12 @@
             document.getElementById("btnLoad").click();
             document.getElementById("settingsModal").click();
         }
-        // document ready
+        // document ready setup
         $(document).ready(function() {
+            // setup tag input
             $('#tagsFriends').tagsInput();
 
+            // load data from file
             getData().then(data => {
                 // console.log("settings: \n" + data);
                 setFull = data.split("\n");
@@ -189,9 +204,11 @@
                 secondColor = setColors[1];
                 feedSize = parseInt(setFull[2].split(",")[0]);
                 $('#tagsFriends').importTags(setFull[3]);
+                // once data is loaded, apply settings from file and render page
                 applySettings(firstColor, secondColor, ptw, cpl, oh, d, w, feedSize);
             });
 
+            // setup feedsize slider
             $("#feedSize").slider({
                 min: 5,
                 max: 100,
@@ -201,6 +218,7 @@
                 }
             });
 
+            // setup settings button
             document.getElementById("btnSettings").addEventListener("click", function() {
 
                 $('#ptw').prop('checked', ptw);
@@ -220,6 +238,7 @@
                 $(".modal").show('clip', {}, 200);
             });
 
+            // setup close modal
             document.getElementById("settingsModal").addEventListener("click", function(e) {
                 if (e.target !== this)
                     return;
@@ -232,7 +251,9 @@
 </head>
 
 <body>
+    <!-- draggable title bar -->
     <div class="buffer"></div>
+    <!-- main content -->
     <div id="content">
         <form>
             <input name="tags" id="tagsFriends" value="Badtz13,PanDoes,Fandango86,crazyawesome" />
