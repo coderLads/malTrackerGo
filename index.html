@@ -60,7 +60,7 @@
 
             let RSSCombiner = require('rss-combiner');
             feedList = [];
-            url = "https://myanimelist.net/rss.php?type=rw&u="
+            url = "https://myanimelist.net/rss.php?type=rwe&u="
 
             users = users.split(",");
 
@@ -71,7 +71,7 @@
             // console.log(feedList);
 
             var feedConfig = {
-                size: 20,
+                size: 50,
                 feeds: feedList,
                 pubDate: new Date()
             };
