@@ -162,6 +162,12 @@
                     })();
                 }
             });
+            // save settings to file
+            fs.writeFile(pathSet, cpl + "," + w + "," + ptw + "," + oh + "," + d + ",\n" + firstColor.substring(1) + "," + secondColor.substring(1) + ",\n" + feedSize + ",\n" + users.join(","),
+                function(err) {
+                    if (err) throw err;
+                    // console.log('Saved!');
+                });
         }
         // apply changes to settings, and store them in settings file
         function applySettings(color1, color2, fptw, fcpl, foh, fd, fw, ffeedSize) {
@@ -190,9 +196,9 @@
                 setColors = setFull[1].split(",");
                 for (i = 0; i < 5; ++i) {
                     if (setStatuses[i] == "true") {
-                        setStatuses[i] = 1;
+                        setStatuses[i] = true;
                     } else {
-                        setStatuses[i] = 0;
+                        setStatuses[i] = false;
                     }
                 }
                 cpl = setStatuses[0];

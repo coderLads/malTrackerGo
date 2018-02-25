@@ -1,4 +1,4 @@
-true,true,false,true,false,
-AE09EB,2F00CC,
-10,
-Badtz13,PanDoes,Fandango86,miyukimagic,
+true,true,false,false,false,
+2373EB,CC0808,
+15,
+Badtz13,PanDoes,crazyawesome,fandango86
