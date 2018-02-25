@@ -53,6 +53,10 @@ body {
     height: unset !important;
     background: none!important;
     font-family: 'Open Sans', serif!important;
+    margin: 0px !important;
+    padding: 0px !important;
+    padding-left: 4px !important;
+    margin-bottom: 15px!important;
 }
 
 .tag {
@@ -73,8 +77,8 @@ div.tagsinput span.tag a {
 
 .rightButtons {
     float: right;
-    margin-right: 5px;
-    margin-top: -40px;
+    margin-right: 4px;
+    margin-top: -50px;
 }
 
 #btnLoad, #btnSettings, button {
@@ -93,9 +97,8 @@ button#btnSettings {
 }
 
 .buffer {
-    /* border: 1px solid white; */
     top: 0;
-    height: 15px;
+    height: 20px;
     width: 100%;
     /* position: fixed; */
     -webkit-app-region: drag;
@@ -210,14 +213,13 @@ button:hover {
 
 .not_valid {
     background: none!important;
-    height: 30px!important;
+    height: 28px!important;
     color: white!important;
     padding: 0px!important;
     padding-left: 5px!important;
     margin: 0px!important;
     border: 1px solid red!important;
     border-radius: 2px!important;
-    margin-top: -1px!important;
     font-family: 'Open Sans', serif!important;
 }
 
