@@ -59,7 +59,6 @@ body {
     border: 1px solid white !important;
     background: none !important;
     color: white !important;
-    margin-top: 3px;
     font-family: 'Open Sans', serif!important;
 }
 
@@ -211,20 +210,26 @@ button:hover {
 
 .not_valid {
     background: none!important;
-    height: 28px!important;
+    height: 30px!important;
     color: white!important;
     padding: 0px!important;
     padding-left: 5px!important;
     margin: 0px!important;
     border: 1px solid red!important;
     border-radius: 2px!important;
-    margin-top: 3px!important;
+    margin-top: -1px!important;
     font-family: 'Open Sans', serif!important;
 }
 
 input#tagsFriends_tag {
     color: white!important;
-    margin-top: 5px;
     font-family: 'Open Sans', serif!important;
     padding-bottom: 0px!important;
+}
+
+div#tagsFriends_addTag {
+    border: 1px solid none;
+    height: 28px;
+    border-radius: 2px;
+    padding: 0px;
 }
