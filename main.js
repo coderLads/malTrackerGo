@@ -7,6 +7,7 @@ const BrowserWindow = electron.BrowserWindow
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
+let win
 
 function createWindow() {
     // Create the browser window.
@@ -32,6 +33,21 @@ function createWindow() {
         // in an array if your app supports multi windows, this is the time
         // when you should delete the corresponding element.
         mainWindow = null
+        if (win != null) {
+            win = null
+        }
+    })
+    mainWindow.webContents.on('new-window', (event, url) => {
+        event.preventDefault()
+        win = new BrowserWindow({
+            frame: true,
+            width: 1000,
+            height: 700
+        })
+        win.setMenu(null)
+        win.once('ready-to-show', () => win.show())
+        win.loadURL(url)
+        event.newGuest = win
     })
 }
 // This method will be called when Electron has finished
