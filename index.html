@@ -45,6 +45,7 @@
         var firstColor = "";
         var secondColor = "";
         var i = null;
+        var colorList = ["FF0000", "00FF00", "0000FF"];
 
         // create async function to get data from settings file with a promise
         async function getData() {
@@ -78,9 +79,18 @@
             feedList = [];
             url = "https://myanimelist.net/rss.php?type=rw&u="
             users = users.split(",");
-            users.forEach(user => {
-                feedList.push(url + user);
-            });
+            var colorsArray = [];
+            for (var h = 0; h < users.length; h++) {
+                feedList.push(url + users[h]);
+                if (colorList[h]) {
+                    colorsArray.push([users[h], colorList[h]]);
+                }
+            }
+
+            var getTagElements = document.getElementsByClassName("tag");
+            for (var y = 0; y < colorsArray.length; y++) {
+                getTagElements[y].style.setProperty("background-color", "#" + colorsArray[y][1], "important");
+            }
 
             // create config for rss combiner
             var feedConfig = {
@@ -123,6 +133,12 @@
                                 // create feed item element
                                 var div = document.createElement("div");
                                 div.setAttribute('class', "item");
+
+                                for (var v = 0; v < colorsArray.length; v++) {
+                                    if (colorsArray[v][0] == item.creator.split("=")[2]) {
+                                        div.setAttribute('style', "border-right: 3px solid #" + colorsArray[v][1]);
+                                    }
+                                }
 
                                 var a = document.createElement("a");
                                 a.textContent = item.title;
@@ -192,10 +208,6 @@
                 if (currentTag == user) {
                     tagElementList[i].style.setProperty("background-color", "#" + color, "important");
                 }
-            }
-            var itemList = document.getElementsByClassName(user);
-            for (var k = 0; k < itemList.length; k++) {
-                itemList[k].parentElement.style.borderRight = "3px solid " + color;
             }
             document.getElementById("btnLoad").click();
             document.getElementById("colorModal").click();
@@ -280,9 +292,10 @@
             });
 
             // tag color modal
-            var tagElementList = document.getElementsByClassName("tagsinput");
+            var tagElementList = document.getElementsByClassName("tag");
             for (var i = 0; i < tagElementList.length; i++) {
                 tagElementList[i].addEventListener("click", function(e) {
+                    console.log(e.target);
                     var target = e.target.innerHTML.split("&")[0];
                     document.getElementById("colorPickerName").innerHTML = target;
                     if (e.target.parentElement.style.backgroundColor) {
