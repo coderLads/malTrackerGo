@@ -285,10 +285,12 @@
     <div id="settingsModal" style="display:none" class="modal">
         <div class="modalContent modal">
             <p class="modalHeader">Settings</p>
-
+            <div class="modalLabel" id="backgroundLabel">Background Color</div>
             <input type="text" id="color1" class="jscolor {onFineChange:'previewColors()'}" />
             <input type="text" id="color2" class="jscolor {onFineChange:'previewColors()'}" />
+
             <div class="checkboxContainer">
+                <div class="modalLabel" id="checkBoxLabel">Feed Filters</div>
 
                 <input type="checkbox" id="cpl" class="checkbox" />
                 <p class="label">Completed</p>
@@ -306,9 +308,11 @@
                 <p class="label">Dropped</p>
 
             </div>
+
             <div id="feedSize"></div>
-            <div id="sliderDisplay"></div>
             <button id="settingsSubmit" onclick="applySettings($('#color1').val(),$('#color2').val(),$('#ptw').prop('checked'),$('#cpl').prop('checked'),$('#oh').prop('checked'),$('#d').prop('checked'),$('#w').prop('checked'),$('#feedSize').slider('option','value'))">Save</button>
+            <div class="modalLabel" id="feedSizeLabel">Feed Size</div>
+            <div id="sliderDisplay"></div>
         </div>
     </div>
 
