@@ -139,7 +139,7 @@
 
                                 var person = document.createElement("a");
                                 person.textContent = item.creator.split("=")[2];
-                                person.setAttribute('class', "person");
+                                person.setAttribute('class', "person " + item.creator.split("=")[2]);
                                 person.setAttribute('target', "_blank");
                                 person.setAttribute("href", "https://myanimelist.net/profile/" + item.creator.split("=")[2]);
 
@@ -192,6 +192,10 @@
                 if (currentTag == user) {
                     tagElementList[i].style.setProperty("background-color", "#" + color, "important");
                 }
+            }
+            var itemList = document.getElementsByClassName(user);
+            for (var k = 0; k < itemList.length; k++) {
+                itemList[k].parentElement.style.borderRight = "3px solid " + color;
             }
             document.getElementById("btnLoad").click();
             document.getElementById("colorModal").click();
@@ -281,6 +285,11 @@
                 tagElementList[i].addEventListener("click", function(e) {
                     var target = e.target.innerHTML.split("&")[0];
                     document.getElementById("colorPickerName").innerHTML = target;
+                    if (e.target.parentElement.style.backgroundColor) {
+                        document.getElementById("nameColorPicker").jscolor.fromString(e.target.parentElement.style.backgroundColor);
+                    } else {
+                        document.getElementById("nameColorPicker").jscolor.fromString("FFF");
+                    }
 
                     document.body.style.overflow = "hidden";
                     document.getElementById("content").style.webkitFilter = "blur(2px) brightness(80%)";
