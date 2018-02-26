@@ -41,7 +41,7 @@ function createWindow() {
         event.preventDefault()
         win = new BrowserWindow({
             frame: true,
-            width: 1000,
+            width: 1300,
             height: 700
         })
         win.setMenu(null)
