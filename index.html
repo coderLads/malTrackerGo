@@ -239,10 +239,10 @@
             // setup tag input
             $('#tagsFriends').tagsInput({
                 onChange: function() {
+
                     var tempUsers = $('form').serialize().split("=")[1];
                     tempUsers = tempUsers.split("%2C");
                     users = tempUsers;
-
                     var getTagElements = document.getElementsByClassName("tag");
                     for (var y = 0; y < colorsArray.length; y++) {
                         if (getTagElements[y]) {
@@ -252,6 +252,9 @@
                     if (loaded) {
                         for (var k = colorsArray.length; k < users.length; k++) {
                             colorsArray.push([users[k], "none"]);
+                        }
+                        if (colorsArray.length > users.length) {
+                            colorsArray = colorsArray.slice(0, users.length);
                         }
                         document.getElementById("btnLoad").click();
                     }
