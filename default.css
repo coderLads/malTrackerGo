@@ -59,6 +59,22 @@ body {
     margin-bottom: 15px!important;
 }
 
+div.tagsinput input {
+    width: 80px;
+    margin: 0px;
+    font-family: helvetica;
+    font-size: 13px;
+    border: 1px solid transparent;
+    text-decoration: underline;
+    margin-left: 4px;
+    height: 28px;
+    background: transparent;
+    outline: 0px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    padding: 0px;
+}
+
 .tag {
     border: 1px solid white !important;
     background: none !important;
@@ -147,8 +163,11 @@ select:active, select:hover, button:active, button:focus {
 
 .colorModal {
     width: 40%;
-    margin-left: 15%;
     height: 25%;
+}
+
+#colorModalContent {
+    margin-left: 30%;
 }
 
 #backgroundLabel {
