@@ -45,7 +45,7 @@
         var firstColor = "";
         var secondColor = "";
         var i = null;
-        var users = ['Badtz13', 'Miyukimagic'];
+        var users = [];
         var colorsArray = [];
         var loaded = false;
 
@@ -270,9 +270,13 @@
                 secondColor = setColors[1];
                 feedSize = parseInt(setFull[2].split(",")[0]);
                 users = setFull[3].split(",");
-                var colorList = ["FF0000", "00FF00", "0000FF"];
-                for (var u = 0; u < colorList.length; u++) {
-                    colorsArray[u] = [users[u], colorList[u]];
+                var colorList = [];
+                for (var u = 0; u < users.length; u++) {
+                    if (colorList[u]) {
+                        colorsArray[u] = [users[u], colorList[u]];
+                    } else {
+                        colorsArray[u] = [users[u], "none"];
+                    }
                 }
                 $('#tagsFriends').importTags(setFull[3]);
                 // once data is loaded, apply settings from file and render page
