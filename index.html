@@ -187,7 +187,11 @@
             secondColor = "#" + color2;
 
             // save settings to file
-            fs.writeFile(pathSet, cpl + "," + w + "," + ptw + "," + oh + "," + d + ",\n" + firstColor.substring(1) + "," + secondColor.substring(1) + ",\n" + feedSize + ",\n" + users.join(","),
+            var colorsList = [];
+            for (var e = 0; e < colorsArray.length; e++) {
+                colorsList.push(colorsArray[e][1]);
+            }
+            fs.writeFile(pathSet, cpl + "," + w + "," + ptw + "," + oh + "," + d + ",\n" + firstColor.substring(1) + "," + secondColor.substring(1) + ",\n" + feedSize + ",\n" + users.join(",") + ",\n" + colorsList.join(","),
                 function(err) {
                     if (err) throw err;
                 });
@@ -218,6 +222,7 @@
             }
 
             // document.getElementById("btnLoad").click();
+            applySettings(firstColor.split("#")[1], secondColor.split("#")[1], ptw, cpl, oh, d, w, feedSize);
             document.getElementById("colorModal").click();
         }
 
@@ -274,7 +279,7 @@
                 secondColor = setColors[1];
                 feedSize = parseInt(setFull[2].split(",")[0]);
                 users = setFull[3].split(",");
-                var colorList = [];
+                var colorList = setFull[4].split(",");
                 for (var u = 0; u < users.length; u++) {
                     if (colorList[u]) {
                         colorsArray[u] = [users[u], colorList[u]];
