@@ -79,7 +79,9 @@
             feedList = [];
             url = "https://myanimelist.net/rss.php?type=rw&u="
             for (var h = 0; h < users.length; h++) {
-                feedList.push(url + users[h]);
+                if (users[h] != "") {
+                    feedList.push(url + users[h]);
+                }
             }
 
             var getTagElements = document.getElementsByClassName("tag");
@@ -239,23 +241,34 @@
             // setup tag input
             $('#tagsFriends').tagsInput({
                 onChange: function() {
-
-                    var tempUsers = $('form').serialize().split("=")[1];
-                    tempUsers = tempUsers.split("%2C");
-                    users = tempUsers;
-                    var getTagElements = document.getElementsByClassName("tag");
-                    for (var y = 0; y < colorsArray.length; y++) {
-                        if (getTagElements[y]) {
-                            getTagElements[y].style.setProperty("background-color", "#" + colorsArray[y][1], "important");
-                        }
-                    }
                     if (loaded) {
+
+                        var tempUsers = $('form').serialize().split("=")[1];
+                        tempUsers = tempUsers.split("%2C");
+                        users = [];
+                        for (var s = 0; s < tempUsers.length; s++) {
+                            if (tempUsers[s].length > 1) {
+                                users.push(tempUsers[s]);
+                            }
+                        }
+                        // console.log(tempUsers);
+
                         for (var k = colorsArray.length; k < users.length; k++) {
                             colorsArray.push([users[k], "none"]);
                         }
+
                         if (colorsArray.length > users.length) {
                             colorsArray = colorsArray.slice(0, users.length);
                         }
+
+                        var getTagElements = document.getElementsByClassName("tag");
+                        for (var y = 0; y < colorsArray.length; y++) {
+                            if (getTagElements[y]) {
+                                getTagElements[y].style.setProperty("background-color", "#" + colorsArray[y][1], "important");
+                            }
+                        }
+
+                        applySettings(firstColor.split("#")[1], secondColor.split("#")[1], ptw, cpl, oh, d, w, feedSize);
                         document.getElementById("btnLoad").click();
                     }
                 }
@@ -348,7 +361,6 @@
                         } else {
                             document.getElementById("nameColorPicker").jscolor.fromString("FFF");
                         }
-
                         document.body.style.overflow = "hidden";
                         document.getElementById("content").style.webkitFilter = "blur(2px) brightness(80%)";
                         $(".colorModal").show('clip', {}, 200);
