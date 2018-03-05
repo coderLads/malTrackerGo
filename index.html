@@ -27,7 +27,7 @@
         const fs = require('fs'); // File systems
         const util = require('util');
         const path = require('path');
-        const RSSCombiner = require('rss-combiner');
+        const RSSCombiner = require('./scripts/rsscombine');
         const readFile = util.promisify(fs.readFile);
         const Parser = require('rss-parser');
 
