@@ -97,7 +97,11 @@ div.tagsinput span.tag a {
 button#btnSettings, button#btnClose, button#btnTable, button#btnLoad {
     width: 30px;
     -webkit-transition-duration: 0.4s;
-    /* Safari */
+    transition-duration: 0.4s;
+}
+
+button#settingsSubmit {
+    -webkit-transition-duration: 0.4s;
     transition-duration: 0.4s;
 }
 
