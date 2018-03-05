@@ -45,8 +45,6 @@
         var firstColor = "";
         var secondColor = "";
         var i = null;
-        var users = [];
-        var colorsArray = [];
         var loaded = false;
 
         // create async function to get data from settings file with a promise
@@ -54,8 +52,8 @@
             return await readFile(pathSet, 'utf-8');
         }
 
-        // load merged rss feed
-        function loadRSS() {
+        // load merged rss feed of the given users
+        function loadRSS(users) {
 
             // create list of non filtered statuses
             var activeStatuses = [];
@@ -76,20 +74,14 @@
             }
 
             // create list of rss feeds from usernames
+            users = users.split("=")[1];
+            users = users.replace(/%2C/g, ",");
             feedList = [];
             url = "https://myanimelist.net/rss.php?type=rw&u="
-            for (var h = 0; h < users.length; h++) {
-                if (users[h] != "") {
-                    feedList.push(url + users[h]);
-                }
-            }
-
-            var getTagElements = document.getElementsByClassName("tag");
-            for (var y = 0; y < colorsArray.length; y++) {
-                if (getTagElements[y]) {
-                    getTagElements[y].style.setProperty("background-color", "#" + colorsArray[y][1], "important");
-                }
-            }
+            users = users.split(",");
+            users.forEach(user => {
+                feedList.push(url + user);
+            });
 
             // create config for rss combiner
             var feedConfig = {
@@ -133,12 +125,6 @@
                                 var div = document.createElement("div");
                                 div.setAttribute('class', "item");
 
-                                for (var v = 0; v < colorsArray.length; v++) {
-                                    if (colorsArray[v][0] == item.creator.split("=")[2]) {
-                                        div.setAttribute('style', "border-right: 3px solid #" + colorsArray[v][1]);
-                                    }
-                                }
-
                                 var a = document.createElement("a");
                                 a.textContent = item.title;
                                 a.setAttribute('href', item.link);
@@ -154,7 +140,7 @@
 
                                 var person = document.createElement("a");
                                 person.textContent = item.creator.split("=")[2];
-                                person.setAttribute('class', "person " + item.creator.split("=")[2]);
+                                person.setAttribute('class', "person");
                                 person.setAttribute('target', "_blank");
                                 person.setAttribute("href", "https://myanimelist.net/profile/" + item.creator.split("=")[2]);
 
@@ -176,6 +162,12 @@
                     })();
                 }
             });
+            // save settings to file
+            fs.writeFile(pathSet, cpl + "," + w + "," + ptw + "," + oh + "," + d + ",\n" + firstColor.substring(1) + "," + secondColor.substring(1) + ",\n" + feedSize + ",\n" + users.join(","),
+                function(err) {
+                    if (err) throw err;
+                    // console.log('Saved!');
+                });
         }
         // apply changes to settings, and store them in settings file
         function applySettings(color1, color2, fptw, fcpl, foh, fd, fw, ffeedSize) {
@@ -187,45 +179,9 @@
             feedSize = ffeedSize;
             firstColor = "#" + color1;
             secondColor = "#" + color2;
-
-            // save settings to file
-            var colorsList = [];
-            for (var e = 0; e < colorsArray.length; e++) {
-                colorsList.push(colorsArray[e][1]);
-            }
-            fs.writeFile(pathSet, cpl + "," + w + "," + ptw + "," + oh + "," + d + ",\n" + firstColor.substring(1) + "," + secondColor.substring(1) + ",\n" + feedSize + ",\n" + users.join(",") + ",\n" + colorsList.join(","),
-                function(err) {
-                    if (err) throw err;
-                });
             document.getElementsByTagName("html")[0].style.background = "linear-gradient(to bottom right, #" + color1 + ",#" + color2 + ")";
             document.getElementById("btnLoad").click();
             document.getElementById("settingsModal").click();
-        }
-
-        // apply tag colors
-        function saveTagColor(color, user) {
-            var tagElementList = document.getElementsByClassName("tag");
-            for (var i = 0; i < tagElementList.length; i++) {
-                var currentTag = tagElementList[i].innerHTML.split("&")[0];
-                currentTag = currentTag.split(">")[1];
-                if (currentTag == user) {
-                    tagElementList[i].style.setProperty("background-color", "#" + color, "important");
-                }
-            }
-            var found = false;
-            for (var v = 0; v < colorsArray.length; v++) {
-                if (colorsArray[v][0] == user) {
-                    colorsArray[v][1] = color;
-                    found = true;
-                }
-            }
-            if (found == false) {
-                colorsArray.push([user, color]);
-            }
-
-            // document.getElementById("btnLoad").click();
-            applySettings(firstColor.split("#")[1], secondColor.split("#")[1], ptw, cpl, oh, d, w, feedSize);
-            document.getElementById("colorModal").click();
         }
 
         // setup auto color update in settings
@@ -237,38 +193,11 @@
 
         // document ready setup
         $(document).ready(function() {
-
             // setup tag input
             $('#tagsFriends').tagsInput({
                 onChange: function() {
                     if (loaded) {
-
-                        var tempUsers = $('form').serialize().split("=")[1];
-                        tempUsers = tempUsers.split("%2C");
-                        users = [];
-                        for (var s = 0; s < tempUsers.length; s++) {
-                            if (tempUsers[s].length > 1) {
-                                users.push(tempUsers[s]);
-                            }
-                        }
-                        // console.log(tempUsers);
-
-                        for (var k = colorsArray.length; k < users.length; k++) {
-                            colorsArray.push([users[k], "none"]);
-                        }
-
-                        if (colorsArray.length > users.length) {
-                            colorsArray = colorsArray.slice(0, users.length);
-                        }
-
-                        var getTagElements = document.getElementsByClassName("tag");
-                        for (var y = 0; y < colorsArray.length; y++) {
-                            if (getTagElements[y]) {
-                                getTagElements[y].style.setProperty("background-color", "#" + colorsArray[y][1], "important");
-                            }
-                        }
-
-                        applySettings(firstColor.split("#")[1], secondColor.split("#")[1], ptw, cpl, oh, d, w, feedSize);
+                        console.log("changed");
                         document.getElementById("btnLoad").click();
                     }
                 }
@@ -276,6 +205,7 @@
 
             // load data from file
             getData().then(data => {
+                // console.log("settings: \n" + data);
                 setFull = data.split("\n");
                 setStatuses = setFull[0].split(",");
                 setColors = setFull[1].split(",");
@@ -294,16 +224,8 @@
                 firstColor = setColors[0];
                 secondColor = setColors[1];
                 feedSize = parseInt(setFull[2].split(",")[0]);
-                users = setFull[3].split(",");
-                var colorList = setFull[4].split(",");
-                for (var u = 0; u < users.length; u++) {
-                    if (colorList[u]) {
-                        colorsArray[u] = [users[u], colorList[u]];
-                    } else {
-                        colorsArray[u] = [users[u], "none"];
-                    }
-                }
                 $('#tagsFriends').importTags(setFull[3]);
+
                 // once data is loaded, apply settings from file and render page
                 applySettings(firstColor, secondColor, ptw, cpl, oh, d, w, feedSize);
                 loaded = true;
@@ -348,35 +270,6 @@
                 document.getElementById("content").style.webkitFilter = "blur(0px) brightness(100%)";
                 $(".modal").hide('clip', {}, 200);
             });
-
-            // tag color modal
-            var tagElementList = document.getElementsByClassName("tagsinput");
-            for (var i = 0; i < tagElementList.length; i++) {
-                tagElementList[i].addEventListener("click", function(e) {
-                    var target = e.target.innerHTML.split("&")[0];
-                    if (target) {
-                        document.getElementById("colorPickerName").innerHTML = target;
-                        if (e.target.parentElement.style.backgroundColor) {
-                            document.getElementById("nameColorPicker").jscolor.fromString(e.target.parentElement.style.backgroundColor);
-                        } else {
-                            document.getElementById("nameColorPicker").jscolor.fromString("FFF");
-                        }
-                        document.body.style.overflow = "hidden";
-                        document.getElementById("content").style.webkitFilter = "blur(2px) brightness(80%)";
-                        $(".colorModal").show('clip', {}, 200);
-                    }
-                });
-            }
-
-            // close color modal on clickoff
-            document.getElementById("colorModal").addEventListener("click", function(e) {
-                if (e.target !== this)
-                    return;
-                document.body.style.overflow = "scroll";
-                document.getElementById("content").style.webkitFilter = "blur(0px) brightness(100%)";
-                $(".colorModal").hide('clip', {}, 200);
-                document.getElementById("btnLoad").click();
-            });
         });
     </script>
 </head>
@@ -387,10 +280,10 @@
     <!-- main content -->
     <div id="content">
         <form>
-            <input name="tags" type="text" id="tagsFriends" value="Badtz13,PanDoes,Fandango86,crazyawesome" />
+            <input name="tags" id="tagsFriends" value="Badtz13,PanDoes,Fandango86,crazyawesome" />
         </form>
         <div class="rightButtons">
-            <button id="btnLoad" onclick="loadRSS()">Refresh</button>
+            <button id="btnLoad" onclick="loadRSS($('form').serialize())">Refresh</button>
             <button id="btnSettings"><i class="fas fa-cog"></i></button>
         </div>
         <div id="display">
@@ -429,15 +322,6 @@
             <button id="settingsSubmit" onclick="applySettings($('#color1').val(),$('#color2').val(),$('#ptw').prop('checked'),$('#cpl').prop('checked'),$('#oh').prop('checked'),$('#d').prop('checked'),$('#w').prop('checked'),$('#feedSize').slider('option','value'))">Save</button>
             <div class="modalLabel" id="feedSizeLabel">Feed Size</div>
             <div id="sliderDisplay"></div>
-        </div>
-    </div>
-    <div id="colorModal" style="display:none" class="colorModal">
-        <div class="modalContent colorModal" id="colorModalContent">
-            <p class="modalHeader">Edit colors for
-                <div id="colorPickerName"></div>
-            </p>
-            <input type="text" id="nameColorPicker" class="jscolor" />
-            <button id="colorSubmit" onclick="saveTagColor($('#nameColorPicker').val(),$('#colorPickerName').text())">Save</button>
         </div>
     </div>
 
