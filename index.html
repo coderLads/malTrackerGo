@@ -166,7 +166,6 @@
             fs.writeFile(pathSet, cpl + "," + w + "," + ptw + "," + oh + "," + d + ",\n" + firstColor.substring(1) + "," + secondColor.substring(1) + ",\n" + feedSize + ",\n" + users.join(","),
                 function(err) {
                     if (err) throw err;
-                    // console.log('Saved!');
                 });
         }
         // apply changes to settings, and store them in settings file
@@ -197,7 +196,6 @@
             $('#tagsFriends').tagsInput({
                 onChange: function() {
                     if (loaded) {
-                        console.log("changed");
                         document.getElementById("btnLoad").click();
                     }
                 }
@@ -205,7 +203,6 @@
 
             // load data from file
             getData().then(data => {
-                // console.log("settings: \n" + data);
                 setFull = data.split("\n");
                 setStatuses = setFull[0].split(",");
                 setColors = setFull[1].split(",");
@@ -283,7 +280,7 @@
             <input name="tags" id="tagsFriends" value="Badtz13,PanDoes,Fandango86,crazyawesome" />
         </form>
         <div class="rightButtons">
-            <button id="btnLoad" onclick="loadRSS($('form').serialize())">Refresh</button>
+            <button id="btnLoad" onclick="loadRSS($('form').serialize())"><i class="fas fa-sync-alt"></i></button>
             <button id="btnTable"><a href="https://docs.google.com/spreadsheets/d/1C-qd3FYMk_HMiaXvdnBS2nTIPKSIBZ_lz1vICL35D-o/edit?usp=sharing" target="_blank"><i class="fas fa-table"></i></a></button>
             <button id="btnSettings"><i class="fas fa-cog"></i></button>
             <button id="btnClose"><i class="fas fa-times"></i></button>
