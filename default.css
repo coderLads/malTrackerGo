@@ -89,7 +89,7 @@ div.tagsinput span.tag a {
     height: 30px;
 }
 
-button#btnSettings {
+button#btnSettings, button#btnClose {
     width: 30px;
     -webkit-transition-duration: 0.4s;
     /* Safari */
