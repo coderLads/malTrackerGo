@@ -1,3 +1,4 @@
 node_modules
 *.lock
 settings.txt
+dist
