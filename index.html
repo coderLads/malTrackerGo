@@ -151,14 +151,8 @@
                                 content.appendChild(div);
                                 matchCount++;
                             }
-
                         }
-                        // fix background gradient on less items than fill screen
-                        if (window.innerHeight > document.getElementById("content").clientHeight) {
-                            document.getElementsByTagName("html")[0].style.height = "100%";
-                        } else {
-                            document.getElementsByTagName("html")[0].style.height = "";
-                        }
+                        fixGradient();
                     })();
                 }
             });
@@ -168,6 +162,17 @@
                     if (err) throw err;
                 });
         }
+
+        // fix background gradient on less items than fill screen
+        function fixGradient() {
+
+            if (window.innerHeight > document.getElementById("content").clientHeight) {
+                document.getElementsByTagName("html")[0].style.height = "100%";
+            } else {
+                document.getElementsByTagName("html")[0].style.height = "";
+            }
+        }
+
         // apply changes to settings, and store them in settings file
         function applySettings(color1, color2, fptw, fcpl, foh, fd, fw, ffeedSize) {
             ptw = fptw;
@@ -258,6 +263,16 @@
                 $(".modal").show('clip', {}, 200);
             });
 
+            // setup swap button
+            document.getElementById("btnTable").addEventListener("click", function() {
+                $("#display").toggle('drop', {
+                    direction: "down"
+                }, 1000, function() {
+                    fixGradient();
+                });
+
+            });
+
             // setup close modal
             document.getElementById("settingsModal").addEventListener("click", function(e) {
                 if (e.target !== this)
@@ -281,7 +296,7 @@
         </form>
         <div class="rightButtons">
             <button id="btnLoad" onclick="loadRSS($('form').serialize())"><i class="fas fa-sync-alt"></i></button>
-            <button id="btnTable"><a href="https://docs.google.com/spreadsheets/d/1C-qd3FYMk_HMiaXvdnBS2nTIPKSIBZ_lz1vICL35D-o/edit?usp=sharing" target="_blank"><i class="fas fa-table"></i></a></button>
+            <button id="btnTable"><i class="fas fa-table"></i></button>
             <button id="btnSettings"><i class="fas fa-cog"></i></button>
             <button id="btnClose"><i class="fas fa-times"></i></button>
         </div>
