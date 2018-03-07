@@ -265,26 +265,31 @@
 
             // setup swap button
             document.getElementById("btnTable").addEventListener("click", function() {
-                if ($('#divTable').css('display') == 'none') {
-                    $("#display").toggle('drop', {
-                        direction: "down"
-                    }, 1000);
-                    $("#divTable").toggle('drop', {
-                        direction: "down"
-                    }, 1000, function() {
-                        fixGradient();
-                    });
-                }
-                if ($('#display').css('display') == 'none') {
-                    $("#divTable").toggle('drop', {
-                        direction: "down"
-                    }, 1000);
-                    $("#display").toggle('drop', {
-                        direction: "down"
-                    }, 1000, function() {
-                        fixGradient();
-                    });
-                }
+                $("#display").fadeToggle();
+                $("#divTable").fadeToggle(function() {
+                    fixGradient();
+                });
+
+                // jquery ui animations that are kinda busted
+                // if ($('#divTable').css('display') == 'none') {
+                //     $("#display").toggle('drop', {
+                //         direction: "right"
+                //     }, 1000);
+                //     $("#divTable").toggle('drop', {
+                //         direction: "right"
+                //     }, 1000, function() {
+                //         fixGradient();
+                //     });
+                // } else {
+                //     $("#divTable").toggle('drop', {
+                //         direction: "right"
+                //     }, 1000);
+                //     $("#display").toggle('drop', {
+                //         direction: "right"
+                //     }, 1000, function() {
+                //         fixGradient();
+                //     });
+                // }
             });
 
             // setup close modal
