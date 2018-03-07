@@ -18,6 +18,7 @@ body {
     margin-left: 20px;
     margin-right: 20px;
     overflow: auto;
+    transition-duration: 0.4s;
     -webkit-transition-duration: 0.4s;
 }
 
