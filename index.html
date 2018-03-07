@@ -265,10 +265,22 @@
 
             // setup swap button
             document.getElementById("btnTable").addEventListener("click", function() {
-                $("#display").fadeToggle();
-                $("#divTable").fadeToggle(function() {
-                    fixGradient();
-                });
+                if ($('#divTable').css('display') == 'none') { // if we are on the main rss display
+
+                    $("#display").hide(0, function() {
+                        $("#divTable").show(0, function() {
+                            fixGradient();
+                        });
+                    });
+
+                } else { // we are on the table
+                    $("#divTable").hide(0, function() {
+                        $("#display").show(0, function() {
+                            fixGradient();
+                        });
+                    });
+                }
+
 
                 // jquery ui animations that are kinda busted
                 // if ($('#divTable').css('display') == 'none') {
