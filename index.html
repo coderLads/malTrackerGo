@@ -265,12 +265,26 @@
 
             // setup swap button
             document.getElementById("btnTable").addEventListener("click", function() {
-                $("#display").toggle('drop', {
-                    direction: "down"
-                }, 1000, function() {
-                    fixGradient();
-                });
-
+                if($('#divTable').css('display') == 'none'){
+                    $("#display").toggle('drop', {
+                        direction: "down"
+                    }, 1000);
+                    $("#divTable").toggle('drop', {
+                        direction: "down"
+                    }, 1000, function() {
+                        fixGradient();
+                    });
+                }
+                if($('#display').css('display') == 'none'){
+                    $("#divTable").toggle('drop', {
+                        direction: "down"
+                    }, 1000);
+                    $("#display").toggle('drop', {
+                        direction: "down"
+                    }, 1000, function() {
+                        fixGradient();
+                    });
+                }
             });
 
             // setup close modal
@@ -301,6 +315,16 @@
             <button id="btnClose"><i class="fas fa-times"></i></button>
         </div>
         <div id="display">
+        </div>
+        <div id="divTable" style="display:none;">
+            <table>
+                <td>
+                    Let's go
+                </td>
+                <td>
+                    Let's MalGo
+                </td>
+            </table>
         </div>
     </div>
 
