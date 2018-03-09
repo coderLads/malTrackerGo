@@ -168,7 +168,7 @@ select:active, select:hover, button:active, button:focus {
 #feedSizeLabel {
     text-align: right;
     margin-right: 70px;
-    margin-top: -170px;
+    margin-top: -190px;
 }
 
 .jscolor {
@@ -230,14 +230,14 @@ p.label {
 #feedSize {
     float: right;
     margin-right: 8%;
-    margin-top: -110px;
+    margin-top: -130px;
 }
 
 div#sliderDisplay {
     float: right;
     margin-right: 8%;
     padding-right: 40px;
-    margin-top: -90px;
+    margin-top: -110px;
     font-size: 12px;
 }
 
