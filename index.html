@@ -319,15 +319,19 @@
             function refresh() {
                 clearTimeout(timer);
                 timer = setTimeout(function() {
-                    document.getElementById("btnLoad").click()
+                    if ($('#divTable').css('display') == 'none') {
+                        document.getElementById("btnLoad").click();
+                    }
                     refresh();
-                }, 20000);
+                }, 5000);
             };
 
             // creates the timer
             timer = setTimeout(function() {
-                document.getElementById("btnLoad").click();
-            }, 20000);
+                if ($('#divTable').css('display') == 'none') {
+                    document.getElementById("btnLoad").click();
+                }
+            }, 5000);
 
             // calls reset timer function if user is active 
             $(document).on('keypress, click, mousemove', refresh);
