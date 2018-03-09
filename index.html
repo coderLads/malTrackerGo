@@ -91,7 +91,7 @@
                             $('<td>').text(animeScores.indexOf(show) + 1).appendTo(tr);
                             $('<td>').text(show[0]).appendTo(tr);
                             $('<td>').text(Math.round(avg * 100) / 100).appendTo(tr);
-                            $('<td>').text(0).appendTo(tr);
+                            $('<td>').text(Math.round((avg + ((bucket / 10) * (avg))) * 100) / 100).appendTo(tr);
                             show[2].forEach(score => {
                                 $('<td>').text(score).appendTo(tr);
                             });
