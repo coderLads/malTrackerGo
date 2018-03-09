@@ -41,6 +41,7 @@
         var oh = false;
         var d = false;
         var w = false;
+        var r = false;
         var feedSize = 15;
         var firstColor = "";
         var secondColor = "";
@@ -58,19 +59,22 @@
             // create list of non filtered statuses
             var activeStatuses = [];
             if (ptw) {
-                activeStatuses.push("Plan to Watch");
+                activeStatuses.push("Plan to Watch ");
             }
             if (cpl) {
-                activeStatuses.push("Completed");
+                activeStatuses.push("Completed ");
             }
             if (oh) {
-                activeStatuses.push("On-hold");
+                activeStatuses.push("On-hold ");
             }
             if (d) {
-                activeStatuses.push("Dropped");
+                activeStatuses.push("Dropped ");
             }
             if (w) {
-                activeStatuses.push("Watching");
+                activeStatuses.push("Watching ");
+            }
+            if (r) {
+                activeStatuses.push("");
             }
 
             // create list of rss feeds from usernames
@@ -112,11 +116,9 @@
 
                         for (var i = 0; i < feed.items.length; i++) { // loop through all feed items
                             var item = feed.items[i];
-
                             // check if the feed item matches filters
-                            var status = item.content.split(" - ")[0];
+                            var status = item.content.split("- ")[0];
                             if (activeStatuses.includes(status)) {
-
                                 if (matchCount == feedSize) { // if max feed size is hit, break
                                     break;
                                 }
@@ -136,7 +138,12 @@
                                 pubDate.setAttribute("class", "date");
 
                                 var desc = document.createElement("p");
-                                desc.textContent = item.content;
+                                if(status != ""){
+                                    desc.textContent = item.content;
+                                }else{
+                                    desc.textContent = "Re-watching " + item.content;
+                                }
+                                
 
                                 var person = document.createElement("a");
                                 person.textContent = item.creator.split("=")[2];
@@ -157,10 +164,11 @@
                 }
             });
             // save settings to file
-            fs.writeFile(pathSet, cpl + "," + w + "," + ptw + "," + oh + "," + d + ",\n" + firstColor.substring(1) + "," + secondColor.substring(1) + ",\n" + feedSize + ",\n" + users.join(","),
+            fs.writeFile(pathSet, cpl + "," + w + "," + ptw + "," + oh + "," + d + "," + r + ",\n" + firstColor.substring(1) + "," + secondColor.substring(1) + ",\n" + feedSize + ",\n" + users.join(","),
                 function(err) {
                     if (err) throw err;
-                });
+                }
+            );
         }
 
         // fix background gradient on less items than fill screen
@@ -174,12 +182,13 @@
         }
 
         // apply changes to settings, and store them in settings file
-        function applySettings(color1, color2, fptw, fcpl, foh, fd, fw, ffeedSize) {
+        function applySettings(color1, color2, fptw, fcpl, foh, fd, fw, fr, ffeedSize) {
             ptw = fptw;
             cpl = fcpl;
             oh = foh;
             d = fd;
             w = fw;
+            r = fr;
             feedSize = ffeedSize;
             firstColor = "#" + color1;
             secondColor = "#" + color2;
@@ -211,7 +220,7 @@
                 setFull = data.split("\n");
                 setStatuses = setFull[0].split(",");
                 setColors = setFull[1].split(",");
-                for (i = 0; i < 5; ++i) {
+                for (i = 0; i < 6; ++i) {
                     if (setStatuses[i] == "true") {
                         setStatuses[i] = true;
                     } else {
@@ -223,13 +232,14 @@
                 ptw = setStatuses[2];
                 oh = setStatuses[3];
                 d = setStatuses[4];
+                r = setStatuses[5];
                 firstColor = setColors[0];
                 secondColor = setColors[1];
                 feedSize = parseInt(setFull[2].split(",")[0]);
                 $('#tagsFriends').importTags(setFull[3]);
 
                 // once data is loaded, apply settings from file and render page
-                applySettings(firstColor, secondColor, ptw, cpl, oh, d, w, feedSize);
+                applySettings(firstColor, secondColor, ptw, cpl, oh, d, w, r, feedSize);
                 loaded = true;
             });
 
@@ -251,6 +261,7 @@
                 $('#oh').prop('checked', oh);
                 $('#d').prop('checked', d);
                 $('#w').prop('checked', w);
+                $('#r').prop('checked', r);
 
                 document.getElementById("color1").jscolor.fromString(firstColor.split("#")[1]);
                 document.getElementById("color2").jscolor.fromString(secondColor.split("#")[1]);
@@ -383,10 +394,12 @@
                 <input type="checkbox" id="d" class="checkbox" />
                 <p class="label">Dropped</p>
 
+                <input type="checkbox" id="r" class="checkbox" />
+                <p class="label">Rewatching</p>
             </div>
 
             <div id="feedSize"></div>
-            <button id="settingsSubmit" onclick="applySettings($('#color1').val(),$('#color2').val(),$('#ptw').prop('checked'),$('#cpl').prop('checked'),$('#oh').prop('checked'),$('#d').prop('checked'),$('#w').prop('checked'),$('#feedSize').slider('option','value'))">Save</button>
+            <button id="settingsSubmit" onclick="applySettings($('#color1').val(),$('#color2').val(),$('#ptw').prop('checked'),$('#cpl').prop('checked'),$('#oh').prop('checked'),$('#d').prop('checked'),$('#w').prop('checked'),$('#r').prop('checked'),$('#feedSize').slider('option','value'))">Save</button>
             <div class="modalLabel" id="feedSizeLabel">Feed Size</div>
             <div id="sliderDisplay"></div>
         </div>
