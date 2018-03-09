@@ -1,16 +1,8 @@
-var fs = require('fs');
-var request = require("request");
-var parseString = require('xml2js').parseString;
-var util = require('util');
-
-var animeScores = [];
-var users = ["PanDoes", "Badtz13"];
-
 function getMalScore(id) {
     return "disabled";
 }
 
-function getScores(user, callback) {
+function getScores(user, users, callback) {
     var feed = 'https://myanimelist.net/malappinfo.php?u=' + user + '&type=anime&status=all';
 
     request(feed, function(error, response, data) {
@@ -42,15 +34,4 @@ function getScores(user, callback) {
             callback(animeScores);
         });
     });
-}
-
-var counter = 0;
-for (var i = 0; i < users.length; i++) {
-    getScores(users[i], function(data) {
-        animeScores = data;
-        if (counter == users.length - 1) {
-            console.log(animeScores.length);
-        }
-        counter++;
-    })
 }

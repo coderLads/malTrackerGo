@@ -20,6 +20,10 @@
 
     <script src="scripts/jscolor.js"></script>
 
+    <script src="scripts/remoteButtons.js"></script>
+
+    <script src="scripts/fetchScores.js"></script>
+
     <link rel="stylesheet" href="default.css" />
 
     <script type="text/javascript">
@@ -27,6 +31,8 @@
         const fs = require('fs'); // File systems
         const util = require('util');
         const path = require('path');
+        const request = require("request");
+        const parseString = require('xml2js').parseString;
         const RSSCombiner = require('./scripts/rsscombine');
         const readFile = util.promisify(fs.readFile);
         const Parser = require('rss-parser');
@@ -47,12 +53,54 @@
         var secondColor = "";
         var i = null;
         var loaded = false;
+        var animeScores = [];
 
         // create async function to get data from settings file with a promise
         async function getData() {
             return await readFile(pathSet, 'utf-8');
         }
 
+        // create function for generating the dank anime list table
+        function generateTable(users) {
+            // load animeScores for table
+            var counter = 0;
+            $('#dataTable').find('tbody').empty();
+            $('#dataTable').find('tbody').append($('<tr>').attr('id', "header"));
+            var header = $("#header");
+            $('<td>').text("#").appendTo(header);
+            $('<td>').text("title").attr('id', 'title').appendTo(header);
+            $('<td>').text("average").appendTo(header);
+            $('<td>').text("weighted").appendTo(header);
+            for (var i = 0; i < users.length; i++) {
+                $('<td>').text(users[i]).appendTo(header);
+                getScores(users[i], users, function(data) {
+                    animeScores = data;
+                    if (counter == users.length - 1) { // this is where the table gets made
+                        animeScores.forEach(show => {
+                            var sum = 0;
+                            var bucket = 0;
+                            show[2].forEach(score => {
+                                if (score != "") {
+                                    sum += parseInt(score);
+                                    bucket++;
+                                }
+                            });
+                            var avg = sum / bucket;
+                            $('#dataTable').find('tbody').append($('<tr>').attr('id', animeScores.indexOf(show)));
+                            var tr = $("#" + animeScores.indexOf(show));
+                            $('<td>').text(animeScores.indexOf(show) + 1).appendTo(tr);
+                            $('<td>').text(show[0]).appendTo(tr);
+                            $('<td>').text(Math.round(avg * 100) / 100).appendTo(tr);
+                            $('<td>').text(0).appendTo(tr);
+                            show[2].forEach(score => {
+                                $('<td>').text(score).appendTo(tr);
+                            });
+                        });
+                    }
+                    counter++;
+                })
+            }
+        }
         // load merged rss feed of the given users
         function loadRSS(users) {
 
@@ -138,12 +186,11 @@
                                 pubDate.setAttribute("class", "date");
 
                                 var desc = document.createElement("p");
-                                if(status != ""){
+                                if (status != "") {
                                     desc.textContent = item.content;
-                                }else{
+                                } else {
                                     desc.textContent = "Re-watching " + item.content;
                                 }
-                                
 
                                 var person = document.createElement("a");
                                 person.textContent = item.creator.split("=")[2];
@@ -163,6 +210,9 @@
                     })();
                 }
             });
+
+            generateTable(users);
+
             // save settings to file
             fs.writeFile(pathSet, cpl + "," + w + "," + ptw + "," + oh + "," + d + "," + r + ",\n" + firstColor.substring(1) + "," + secondColor.substring(1) + ",\n" + feedSize + ",\n" + users.join(","),
                 function(err) {
@@ -253,6 +303,26 @@
                 }
             });
 
+            // code for auto pull feed
+
+            var timer;
+            // resets the timer
+            function refresh() {
+                clearTimeout(timer);
+                timer = setTimeout(function() {
+                    document.getElementById("btnLoad").click()
+                    refresh();
+                }, 20000);
+            };
+
+            // creates the timer
+            timer = setTimeout(function() {
+                document.getElementById("btnLoad").click();
+            }, 20000);
+
+            // calls reset timer function if user is active 
+            $(document).on('keypress, click, mousemove', refresh);
+
             // setup settings button
             document.getElementById("btnSettings").addEventListener("click", function() {
 
@@ -324,6 +394,7 @@
                 document.getElementById("content").style.webkitFilter = "blur(0px) brightness(100%)";
                 $(".modal").hide('clip', {}, 200);
             });
+
         });
     </script>
 </head>
@@ -346,24 +417,8 @@
         </div>
         <div id="divTable" style="display:none;">
             <table id="dataTable">
-                <tr>
-                    <th>#</th>
-                    <th>Title</th>
-                    <th>Average</th>
-                    <th>Weighted</th>
-                    <th>PanDoes</th>
-                    <th>Badtz13</th>
-                    <th>CrazyAwesome</th>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>No Game No Life</td>
-                    <td>9.17</td>
-                    <td>14.67</td>
-                    <td>10</td>
-                    <td>9</td>
-                    <td>10</td>
-                </tr>
+                <tbody>
+                </tbody>
             </table>
         </div>
     </div>
@@ -404,29 +459,6 @@
             <div id="sliderDisplay"></div>
         </div>
     </div>
-    <script src="scripts/remoteButtons.js"></script>
 </body>
-
-<script>
-    // code for auto pull feed
-
-    var timer;
-    // resets the timer
-    function refresh() {
-        clearTimeout(timer);
-        timer = setTimeout(function() {
-            document.getElementById("btnLoad").click()
-            refresh();
-        }, 5000);
-    };
-
-    // creates the timer
-    timer = setTimeout(function() {
-        document.getElementById("btnLoad").click();
-    }, 5000);
-
-    // calls reset timer function if user is active 
-    $(document).on('keypress, click, mousemove', refresh);
-</script>
 
 </html>
