@@ -42,12 +42,9 @@
         var setFull = null;
         var setStatuses = null;
         var setColors = null;
-        var ptw = false;
-        var cpl = false;
-        var oh = false;
-        var d = false;
-        var w = false;
-        var r = false;
+        //                  cpl,   w,     ptw,   oh,    d,     re-w,
+        var statusFilter = [false, false, false, false, false, false];
+        var statusTexts = ["Completed ","Watching " , "Plan to Watch ", "On-hold ", "Dropped ", ""];
         var feedSize = 15;
         var firstColor = "";
         var secondColor = "";
@@ -55,6 +52,7 @@
         var loaded = false;
         var animeScores = [];
         var interval = 5000;
+        var fileWrite = "";
 
         // create async function to get data from settings file with a promise
         async function getData() {
@@ -121,24 +119,14 @@
 
             // create list of non filtered statuses
             var activeStatuses = [];
-            if (ptw) {
-                activeStatuses.push("Plan to Watch ");
+            for(i = 0; i < statusFilter.length; i++){
+                if(statusFilter[i]){ // check if the status is enabled
+                    activeStatuses.push(statusTexts[i]); // add the related string to the activeStatuses list
+                }
             }
-            if (cpl) {
-                activeStatuses.push("Completed ");
-            }
-            if (oh) {
-                activeStatuses.push("On-hold ");
-            }
-            if (d) {
-                activeStatuses.push("Dropped ");
-            }
-            if (w) {
-                activeStatuses.push("Watching ");
-            }
-            if (r) {
-                activeStatuses.push("");
-            }
+            statusFilter.forEach(filter => {
+                
+            });
 
             // create list of rss feeds from usernames
             feedList = [];
@@ -222,9 +210,12 @@
                     })();
                 }
             });
-
+            fileWrite = "";
+            statusFilter.forEach(filter => {
+                fileWrite += filter + ",";
+            });
             // save settings to file
-            fs.writeFile(pathSet, cpl + "," + w + "," + ptw + "," + oh + "," + d + "," + r + ",\n" + firstColor.substring(1) + "," + secondColor.substring(1) + ",\n" + feedSize + ",\n" + users.join(","),
+            fs.writeFile(pathSet, fileWrite + "\n" + firstColor.substring(1) + "," + secondColor.substring(1) + ",\n" + feedSize + ",\n" + users.join(","),
                 function(err) {
                     if (err) throw err;
                 }
@@ -242,13 +233,13 @@
         }
 
         // apply changes to settings, and store them in settings file
-        function applySettings(color1, color2, fptw, fcpl, foh, fd, fw, fr, ffeedSize) {
-            ptw = fptw;
-            cpl = fcpl;
-            oh = foh;
-            d = fd;
-            w = fw;
-            r = fr;
+        function applySettings(color1, color2, fcpl, fw, fptw, foh, fd, fr, ffeedSize) {
+            statusFilter[0] = fcpl;
+            statusFilter[1] = fw;
+            statusFilter[2] = fptw;
+            statusFilter[3] = foh;
+            statusFilter[4] = fd;
+            statusFilter[5] = fr;
             feedSize = ffeedSize;
             firstColor = "#" + color1;
             secondColor = "#" + color2;
@@ -280,26 +271,23 @@
                 setFull = data.split("\n");
                 setStatuses = setFull[0].split(",");
                 setColors = setFull[1].split(",");
-                for (i = 0; i < 6; ++i) {
+                for(i=0; i < statusFilter.length; i++){
                     if (setStatuses[i] == "true") {
                         setStatuses[i] = true;
                     } else {
                         setStatuses[i] = false;
                     }
                 }
-                cpl = setStatuses[0];
-                w = setStatuses[1];
-                ptw = setStatuses[2];
-                oh = setStatuses[3];
-                d = setStatuses[4];
-                r = setStatuses[5];
+                statusFilter.forEach(i => {
+                    statusFilter[i] = setStatuses[i];
+                });
                 firstColor = setColors[0];
                 secondColor = setColors[1];
                 feedSize = parseInt(setFull[2].split(",")[0]);
                 $('#tagsFriends').importTags(setFull[3]);
 
                 // once data is loaded, apply settings from file and render page
-                applySettings(firstColor, secondColor, ptw, cpl, oh, d, w, r, feedSize);
+                applySettings(firstColor, secondColor, statusFilter[0], statusFilter[1], statusFilter[2], statusFilter[3], statusFilter[4], statusFilter[5], feedSize);
                 loaded = true;
             });
 
@@ -339,13 +327,12 @@
 
             // setup settings button
             document.getElementById("btnSettings").addEventListener("click", function() {
-
-                $('#ptw').prop('checked', ptw);
-                $('#cpl').prop('checked', cpl);
-                $('#oh').prop('checked', oh);
-                $('#d').prop('checked', d);
-                $('#w').prop('checked', w);
-                $('#r').prop('checked', r);
+                $('#cpl').prop('checked', statusFilter[0]);
+                $('#w').prop('checked', statusFilter[1]);
+                $('#ptw').prop('checked', statusFilter[2]);
+                $('#oh').prop('checked', statusFilter[3]);
+                $('#d').prop('checked', statusFilter[4]);
+                $('#r').prop('checked', statusFilter[5]);
 
                 document.getElementById("color1").jscolor.fromString(firstColor.split("#")[1]);
                 document.getElementById("color2").jscolor.fromString(secondColor.split("#")[1]);
@@ -469,7 +456,7 @@
             </div>
 
             <div id="feedSize"></div>
-            <button id="settingsSubmit" onclick="applySettings($('#color1').val(),$('#color2').val(),$('#ptw').prop('checked'),$('#cpl').prop('checked'),$('#oh').prop('checked'),$('#d').prop('checked'),$('#w').prop('checked'),$('#r').prop('checked'),$('#feedSize').slider('option','value'))">Save</button>
+            <button id="settingsSubmit" onclick="applySettings($('#color1').val(),$('#color2').val(),$('#cpl').prop('checked'),$('#w').prop('checked'),$('#ptw').prop('checked'),$('#oh').prop('checked'),$('#d').prop('checked'),$('#r').prop('checked'),$('#feedSize').slider('option','value'))">Save</button>
             <div class="modalLabel" id="feedSizeLabel">Feed Size</div>
             <div id="sliderDisplay"></div>
         </div>
