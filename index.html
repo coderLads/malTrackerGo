@@ -60,6 +60,19 @@
             return await readFile(pathSet, 'utf-8');
         }
 
+        function loadContent(users) {
+            users = users.split("=")[1];
+            users = users.replace(/%2C/g, ",");
+            users = users.split(",");
+
+            if ($('#divTable').css('display') == 'none') {
+                loadRSS(users);
+            } else {
+                generateTable(users);
+            }
+        }
+
+
         // create function for generating the dank anime list table
         function generateTable(users) {
             // load animeScores for table
@@ -95,6 +108,7 @@
                             show[2].forEach(score => {
                                 $('<td>').text(score).appendTo(tr);
                             });
+                            fixGradient();
                         });
                     }
                     counter++;
@@ -126,11 +140,8 @@
             }
 
             // create list of rss feeds from usernames
-            users = users.split("=")[1];
-            users = users.replace(/%2C/g, ",");
             feedList = [];
             url = "https://myanimelist.net/rss.php?type=rw&u="
-            users = users.split(",");
             users.forEach(user => {
                 feedList.push(url + user);
             });
@@ -210,8 +221,6 @@
                     })();
                 }
             });
-
-            generateTable(users);
 
             // save settings to file
             fs.writeFile(pathSet, cpl + "," + w + "," + ptw + "," + oh + "," + d + "," + r + ",\n" + firstColor.substring(1) + "," + secondColor.substring(1) + ",\n" + feedSize + ",\n" + users.join(","),
@@ -350,6 +359,7 @@
 
                     $("#display").hide(0, function() {
                         $("#divTable").show(0, function() {
+                            document.getElementById("btnLoad").click();
                             fixGradient();
                         });
                     });
@@ -408,7 +418,7 @@
             <input name="tags" id="tagsFriends" value="Badtz13,PanDoes,Fandango86,crazyawesome" />
         </form>
         <div class="rightButtons">
-            <button id="btnLoad" onclick="loadRSS($('form').serialize())"><i class="fas fa-sync-alt"></i></button>
+            <button id="btnLoad" onclick="loadContent($('form').serialize())"><i class="fas fa-sync-alt"></i></button>
             <button id="btnTable"><i class="fas fa-table"></i></button>
             <button id="btnSettings"><i class="fas fa-cog"></i></button>
             <button id="btnClose"><i class="fas fa-times"></i></button>
