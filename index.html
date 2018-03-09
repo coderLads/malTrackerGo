@@ -54,6 +54,7 @@
         var i = null;
         var loaded = false;
         var animeScores = [];
+        var interval = 5000;
 
         // create async function to get data from settings file with a promise
         async function getData() {
@@ -323,7 +324,7 @@
                         document.getElementById("btnLoad").click();
                     }
                     refresh();
-                }, 5000);
+                }, interval);
             };
 
             // creates the timer
@@ -331,7 +332,7 @@
                 if ($('#divTable').css('display') == 'none') {
                     document.getElementById("btnLoad").click();
                 }
-            }, 5000);
+            }, interval);
 
             // calls reset timer function if user is active 
             $(document).on('keypress, click, mousemove', refresh);
