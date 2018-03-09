@@ -44,7 +44,7 @@
         var setColors = null;
         //                  cpl,   w,     ptw,   oh,    d,     re-w,
         var statusFilter = [false, false, false, false, false, false];
-        var statusTexts = ["Completed ","Watching " , "Plan to Watch ", "On-hold ", "Dropped ", ""];
+        var statusTexts = ["Completed ", "Watching ", "Plan to Watch ", "On-hold ", "Dropped ", ""];
         var feedSize = 15;
         var firstColor = "";
         var secondColor = "";
@@ -119,8 +119,8 @@
 
             // create list of non filtered statuses
             var activeStatuses = [];
-            for(i = 0; i < statusFilter.length; i++){
-                if(statusFilter[i]){ // check if the status is enabled
+            for (i = 0; i < statusFilter.length; i++) {
+                if (statusFilter[i]) { // check if the status is enabled
                     activeStatuses.push(statusTexts[i]); // add the related string to the activeStatuses list
                 }
             }
@@ -243,6 +243,7 @@
             document.getElementsByTagName("html")[0].style.background = "linear-gradient(to bottom right, #" + color1 + ",#" + color2 + ")";
             document.getElementById("btnLoad").click();
             document.getElementById("settingsModal").click();
+
         }
 
         // setup auto color update in settings
@@ -268,16 +269,14 @@
                 setFull = data.split("\n");
                 setStatuses = setFull[0].split(",");
                 setColors = setFull[1].split(",");
-                for(i=0; i < statusFilter.length; i++){
+                for (var i = 0; i < statusFilter.length; i++) {
                     if (setStatuses[i] == "true") {
-                        setStatuses[i] = true;
+                        statusFilter[i] = true;
                     } else {
-                        setStatuses[i] = false;
+                        statusFilter[i] = false;
                     }
                 }
-                statusFilter.forEach(i => {
-                    statusFilter[i] = setStatuses[i];
-                });
+
                 firstColor = setColors[0];
                 secondColor = setColors[1];
                 feedSize = parseInt(setFull[2].split(",")[0]);
