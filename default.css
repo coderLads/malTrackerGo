@@ -1,6 +1,13 @@
 html {
     /* background: linear-gradient(to bottom right, #43CBFF, #9708CC); */
-    font-family: 'Open Sans', serif;
+    font-family: 'Nunito', sans-serif!important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5 {
+    line-height: 1.2;
 }
 
  ::-webkit-scrollbar {
@@ -53,7 +60,7 @@ body {
     min-height: 0px !important;
     height: unset !important;
     background: none!important;
-    font-family: 'Open Sans', serif!important;
+    font-family: 'Nunito', sans-serif!important;
     margin: 0px !important;
     padding: 0px !important;
     padding-left: 4px !important;
@@ -64,7 +71,7 @@ body {
     border: 1px solid white !important;
     background: none !important;
     color: white !important;
-    font-family: 'Open Sans', serif!important;
+    font-family: 'Nunito', sans-serif!important;
 }
 
 div.tagsinput span.tag a {
@@ -127,7 +134,7 @@ select:active, select:hover, button:active, button:focus {
 }
 
 .modalContent {
-    font-family: 'Open Sans', serif;
+    font-family: 'Nunito', sans-serif!important;
     width: 70%;
     height: 45%;
     margin-left: 15%;
@@ -142,7 +149,7 @@ select:active, select:hover, button:active, button:focus {
 }
 
 .modalLabel {
-    font-family: 'Open Sans', serif;
+    font-family: 'Nunito', sans-serif!important;
     font-size: 15px;
     padding: 0;
     margin: 0;
@@ -180,7 +187,7 @@ select:active, select:hover, button:active, button:focus {
 
 p.modalHeader {
     padding: 5px;
-    font-family: 'Open Sans', serif;
+    font-family: 'Nunito', sans-serif!important;
     margin: 0px;
     font-size: 20px;
     /* margin-bottom: 20px; */
@@ -258,12 +265,12 @@ button:hover {
     margin: 0px!important;
     border: 1px solid red!important;
     border-radius: 2px!important;
-    font-family: 'Open Sans', serif!important;
+    font-family: 'Nunito', sans-serif!important;
 }
 
 input#tagsFriends_tag {
     color: white!important;
-    font-family: 'Open Sans', serif!important;
+    font-family: 'Nunito', sans-serif!important;
     padding-bottom: 0px!important;
 }
 
@@ -279,7 +286,7 @@ div#tagsFriends_addTag {
     text-align: left;
     color: white;
     font-size: 14px;
-    font-family: 'Open Sans', serif;
+    font-family: 'Nunito', sans-serif!important;
     background-color: rgba(0, 0, 0, 0.185);
     border-radius: 2px;
 }
