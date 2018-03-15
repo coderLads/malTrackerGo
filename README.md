@@ -1,9 +1,12 @@
 # malTrackerGo
 A simple electron app for keeping track of what your friends are watching on MyAnimeList.
 
-Builds are available in the releases tab.
 
 ### installation
+
+Check the releases tab to get a windows installer.
+
+### development
 
 To install the dependencies, simply use `yarn`
 
