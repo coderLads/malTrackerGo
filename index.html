@@ -65,6 +65,7 @@
                     }
                 }
             });
+            $("#tagsFriends_tag").attr("data-default", "Add a user");
 
             // load data from file
             getData().then(data => {
@@ -188,7 +189,7 @@
         </form>
         <div class="rightButtons">
             <button id="btnLoad" onclick="loadContent($('form').serialize())"><i class="fas fa-sync-alt"></i></button>
-            <!-- <button id="btnTable"><i class="fas fa-table"></i></button> -->
+            <button style="display:none" id="btnTable"><i class="fas fa-table"></i></button>
             <button id="btnSettings"><i class="fas fa-cog"></i></button>
             <button id="btnClose"><i class="fas fa-times"></i></button>
         </div>
