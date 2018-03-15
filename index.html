@@ -61,7 +61,10 @@
             $('#tagsFriends').tagsInput({
                 onChange: function() {
                     if (loaded) {
-                        document.getElementById("btnLoad").click();
+                        setTimeout(function() {
+                            document.getElementById("btnLoad").click();
+                        }, 100);
+
                     }
                 }
             });
