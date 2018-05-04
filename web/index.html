@@ -7,7 +7,6 @@
 
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
@@ -17,10 +16,41 @@
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
+    <script type="text/javascript">
+        // let feed;
+        // axios.get("https://cors-anywhere.herokuapp.com/https://myanimelist.net/rss.php?type=rw&u=BADTZ13").then(
+        //     response => feed = response.data);
+
+        function RSSMashup() {
+
+            let RSS = [
+                "https://myanimelist.net/rss.php?type=rw&u=BADTZ13",
+                "https://myanimelist.net/rss.php?type=rw&u=Rabu870",
+                "https://myanimelist.net/rss.php?type=rw&u=PanDoes"
+            ];
+
+            let items = Array;
+
+            for (var i = 0; i < RSS.length; i++) {
+                let feed
+                axios.get("https://cors-anywhere.herokuapp.com/" + RSS[i]).then(response => {
+                    feed = response.data;
+                    parser = new DOMParser();
+                    xmlDoc = parser.parseFromString(feed, "text/xml");
+                    let items = xmlDoc.getElementsByTagName("item");
+                    console.log(items);
+                    console.log(items[0].getElementsByTagName("title")[0].innerHTML);
+                });
+            }
+
+        }
+        RSSMashup();
+    </script>
+
+
 </head>
 
 <body>
-
     <div id="app">
         <nav>
             <tag-selector></tag-selector>
@@ -30,9 +60,7 @@
             <feed-container></feed-container>
         </main>
     </div>
-
 </body>
-
 <script src="main.js"></script>
 
 </html>

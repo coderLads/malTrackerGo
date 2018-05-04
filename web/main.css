@@ -2,11 +2,13 @@
     --text: #fff;
     --background: rgba(0, 0, 0, .1);
     --corners: 3px;
+    --font: 'Nunito', sans-serif !important;
 }
 
 html {
     height: 100%;
     width: 100%;
+    font-family: var(--font);
 }
 
 body {
@@ -14,9 +16,14 @@ body {
     background: linear-gradient(to right bottom, rgb(77, 142, 255), rgb(243, 82, 255));
 }
 
+.tag-selector {
+    width: 800px;
+    height: 30px;
+    margin: auto;
+}
+
 .feed-container {
     margin: auto;
-    /* margin-top: 30px; */
     width: 800px;
     padding: 30px;
 }
@@ -51,7 +58,7 @@ body {
 
 .status,
 .user {
-    line-height: 5.5;
+    margin-top: 20px;
 }
 
 .time,

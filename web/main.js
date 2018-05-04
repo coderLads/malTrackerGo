@@ -1,5 +1,14 @@
 Vue.component('tag-selector', {
-    template: `<input class="tag-selector" type="text">`
+    template: `
+        <div class="tag-selector">
+            <input class="tag-input" type="text" value="PanDoes,Badtz13">
+            <button @click="load">Load</button>
+        </div>`,
+    methods: {
+        load: function () {
+            // this.$root.users = _.compact($(".tag-input")[0].value.split(","));
+        }
+    }
 });
 
 Vue.component('settings', {
