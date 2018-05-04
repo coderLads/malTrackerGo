@@ -1,0 +1,60 @@
+:root {
+    --text: #fff;
+    --background: rgba(0, 0, 0, .1);
+    --corners: 3px;
+}
+
+html {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    margin: 0;
+    background: linear-gradient(to right bottom, rgb(77, 142, 255), rgb(243, 82, 255));
+}
+
+.feed-container {
+    margin: auto;
+    /* margin-top: 30px; */
+    width: 800px;
+    padding: 30px;
+}
+
+.feed-item {
+    height: 90px;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto;
+    background: var(--background);
+    border-radius: var(--corners);
+    color: var(--text);
+}
+
+.feed-item+.feed-item {
+    margin-top: 30px;
+}
+
+.feed-item>* {
+    margin: 0px 10px;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.title,
+.time {
+    margin-top: 10px;
+}
+
+.status,
+.user {
+    line-height: 5.5;
+}
+
+.time,
+.user {
+    text-align: right;
+}
