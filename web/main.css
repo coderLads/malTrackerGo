@@ -39,7 +39,7 @@ body {
     margin: 0px 10px;
 }
 
-a {
+.title>a {
     text-decoration: none;
     color: inherit;
 }
