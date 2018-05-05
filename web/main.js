@@ -1,13 +1,25 @@
 Vue.component('tag-selector', {
+    props: ['users'],
     template: `
         <div class="tag-selector">
-            <input class="tag-input" type="text" value="PanDoes,Badtz13">
+            <input class="tag-input" type="text">
             <button @click="load">Load</button>
         </div>`,
     methods: {
         load: function () {
-            // this.$root.users = _.compact($(".tag-input")[0].value.split(","));
+            let newUsers = _.compact($(".tag-input")[0].value.split(","));
+            this.$root.users = newUsers;
+            Cookies.set('users', $(".tag-input")[0].value);
+            this.$root.populateFeed();
+        },
+        fetchUsers: function () {
+            if (Cookies.get("users")) {
+                $(".tag-input")[0].value = Cookies.get("users");
+            }
         }
+    },
+    mounted() {
+        this.fetchUsers();
     }
 });
 
@@ -37,13 +49,15 @@ Vue.component('feed-container', {
 let app = new Vue({
     el: '#app',
     data: {
-        users: ["Badtz13", "Rabu870", "PanDoes"],
-        feed: []
+        users: [],
+        feed: [],
+        filtered: ['Plan to Watch', 'On Hold', 'Dropped']
     },
     methods: {
         populateFeed: function () {
 
             let users = this.$root.users;
+            let filtered = this.$root.filtered;
             let RSS = [];
 
             users.forEach(user => {
@@ -60,20 +74,34 @@ let app = new Vue({
                     let xmlDoc = parser.parseFromString(response.data, "text/xml");
                     let items = xmlDoc.getElementsByTagName("item");
                     for (let i = 0; i < items.length; i++) {
-                        feed.push({
-                            status: $(items[i].getElementsByTagName("description")[0]).text(),
-                            user: users[k],
-                            link: $(items[i].getElementsByTagName("link")[0]).text(),
-                            time: $(items[i].getElementsByTagName("pubDate")[0]).text(),
-                            title: $(items[i].getElementsByTagName("title")[0]).text()
-                        });
+                        if (!filtered.includes($(items[i].getElementsByTagName("description")[0]).text().split(" - ")[0])) {
+                            feed.push({
+                                status: $(items[i].getElementsByTagName("description")[0]).text(),
+                                user: users[k],
+                                link: $(items[i].getElementsByTagName("link")[0]).text(),
+                                time: $(items[i].getElementsByTagName("pubDate")[0]).text(),
+                                title: $(items[i].getElementsByTagName("title")[0]).text()
+                            });
+                        }
                     }
                 }));
             }
-            Promise.all(promiseList).then(() => this.$root.feed = feed);
+            Promise.all(promiseList).then(() => {
+                feed.sort(function (a, b) {
+                    return new Date(a.time) - new Date(b.time);
+                });
+                this.$root.feed = feed.reverse();
+            });
+        },
+        getCookies: function () {
+            // get user settings from cookies here
+            if (Cookies.get("users")) {
+                this.$root.users = Cookies.get("users").split(",");
+            }
         }
     },
     beforeMount() {
+        this.getCookies();
         this.populateFeed();
     }
 })
