@@ -3,23 +3,35 @@ Vue.component('tag-selector', {
     template: `
         <div class="tag-selector">
             <input class="tag-input" type="text">
-            <button @click="load">Go</button>
+            <button @click="load">RE</button>
         </div>`,
     methods: {
         load: function () {
-            let newUsers = _.compact($(".tag-input")[0].value.split(","));
-            this.$root.users = newUsers;
+            this.$root.users = _.compact($(".tag-input")[0].value.split(","));
             Cookies.set('users', $(".tag-input")[0].value);
             this.$root.populateFeed();
         },
-        populate: function () {
+        loadTags: function () {
+            let self = this;
+            let loaded = this.$root.loaded;
+            $('.tag-input').tagsInput({
+                onChange: _.debounce(function () {
+                    if (loaded) {
+                        self.load();
+                    }
+                }, 1000),
+                defaultText: "Add a user"
+            });
+
             if (Cookies.get("users")) {
-                $(".tag-input")[0].value = Cookies.get("users");
+                let cookieUsers = String(Cookies.get("users"));
+                $(".tag-input").importTags(cookieUsers);
             }
+            this.$root.loaded = true;
         }
     },
     mounted() {
-        this.populate();
+        this.loadTags();
     }
 });
 
@@ -28,20 +40,20 @@ Vue.component('settings', {
 });
 
 Vue.component('feed-item', {
-    props: ['title', 'time', 'status', 'user', 'link'],
+    props: ['title', 'time', 'status', 'user', 'link', 'userlink'],
     template: `
         <div class="feed-item">
             <div class="title"><a :href="link">{{title}}</a></div>
             <div class="time">{{time}}</div>
             <div class="status">{{status}}</div>
-            <div class="user">{{user}}</div>
+            <div class="user"><a :href="userlink">{{user}}</a></div>
         </div>`
 });
 
 Vue.component('feed-container', {
     template: `
         <div class="feed-container">
-            <feed-item v-for="item in $root.feed" :key="item.content" :title="item.title" :time="item.time" :status="item.status" :user="item.user" :link="item.link"></feed-item>
+            <feed-item v-for="item in $root.feed" :key="item.content" :title="item.title" :time="item.time" :status="item.status" :user="item.user" :link="item.link" :userlink="item.userlink"></feed-item>
         </div>`
 });
 
@@ -49,6 +61,7 @@ Vue.component('feed-container', {
 let app = new Vue({
     el: '#app',
     data: {
+        loaded: false,
         users: [],
         feed: [],
         filtered: ['Plan to Watch', 'On Hold', 'Dropped']
@@ -80,7 +93,8 @@ let app = new Vue({
                                 user: users[k],
                                 link: $(items[i].getElementsByTagName("link")[0]).text(),
                                 time: $(items[i].getElementsByTagName("pubDate")[0]).text(),
-                                title: $(items[i].getElementsByTagName("title")[0]).text()
+                                title: $(items[i].getElementsByTagName("title")[0]).text(),
+                                userlink: "https://myanimelist.net/profile/" + users[k]
                             });
                         }
                     }
