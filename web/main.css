@@ -1,7 +1,7 @@
 :root {
     --text: #fff;
     --background: rgba(0, 0, 0, .1);
-    --background-color: #6a5ed4;
+    --background-color: #c299d0;
     --corners: 3px;
     --font: 'Nunito', sans-serif;
 }
@@ -87,6 +87,13 @@ div.tagsinput div {
 .not_valid {
     background: #FBD8DB !important;
     color: #90111A !important;
+}
+
+#update {
+    color: var(--text);
+    float: right;
+    margin-right: 30px;
+    margin-top: -10px;
 }
 
 button {

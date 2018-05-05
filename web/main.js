@@ -130,11 +130,20 @@ let app = new Vue({
 
             $(document).on('keypress, click, mousemove', refresh);
 
+        },
+        updateLog() {
+            axios.get("https://cors-anywhere.herokuapp.com/https://github.com/coderLads/malTrackerGo/commits/master.atom").then(response => {
+                let parser = new DOMParser();
+                let xmlDoc = parser.parseFromString(response.data, "text/xml");
+                let items = xmlDoc.getElementsByTagName("entry");
+                $("#update").text("Last commit: " + $.trim($(items[0].getElementsByTagName("title")).text()));
+            });
         }
     },
     beforeMount() {
         this.getCookies();
         this.populateFeed();
+        this.updateLog();
     },
     mounted() {
         this.setupInterval();
