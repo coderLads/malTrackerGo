@@ -37,26 +37,40 @@ Vue.component('feed-container', {
 let app = new Vue({
     el: '#app',
     data: {
-        users: Array,
-        feed: Array
+        users: ["Badtz13", "Rabu870", "PanDoes"],
+        feed: []
     },
     methods: {
         populateFeed: function () {
-            this.feed = [{
-                    status: "Watching - 6 of 12 episodes",
-                    user: "crazyawesome",
-                    link: "https://myanimelist.net/anime/16732/Kiniro_Mosaic",
-                    time: "Tue, 01 May 2018 10:52:42 GMT",
-                    title: "Kiniro Mosaic - TV",
-                },
-                {
-                    status: "Watching - 9 of 12 episodes",
-                    user: "PanDoes",
-                    link: "https://myanimelist.net/anime/9756/Mahou_Shoujo_Madoka★Magica",
-                    time: "Tue, 06 May 2018 10:52:42 GMT",
-                    title: "Mahou Shoujo Madoka★Magica - TV",
-                }
-            ]
+
+            let users = this.$root.users;
+            let RSS = [];
+
+            users.forEach(user => {
+                RSS.push("https://myanimelist.net/rss.php?type=rw&u=" + user);
+            });
+
+            let feed = [];
+
+            let promiseList = [];
+
+            for (let k = 0; k < RSS.length; k++) {
+                promiseList.push(axios.get("https://cors-anywhere.herokuapp.com/" + RSS[k]).then(response => {
+                    let parser = new DOMParser();
+                    let xmlDoc = parser.parseFromString(response.data, "text/xml");
+                    let items = xmlDoc.getElementsByTagName("item");
+                    for (let i = 0; i < items.length; i++) {
+                        feed.push({
+                            status: $(items[i].getElementsByTagName("description")[0]).text(),
+                            user: users[k],
+                            link: $(items[i].getElementsByTagName("link")[0]).text(),
+                            time: $(items[i].getElementsByTagName("pubDate")[0]).text(),
+                            title: $(items[i].getElementsByTagName("title")[0]).text()
+                        });
+                    }
+                }));
+            }
+            Promise.all(promiseList).then(() => this.$root.feed = feed);
         }
     },
     beforeMount() {

@@ -1,6 +1,7 @@
 :root {
     --text: #fff;
     --background: rgba(0, 0, 0, .1);
+    --background-color: #5fa3b9;
     --corners: 3px;
     --font: 'Nunito', sans-serif !important;
 }
@@ -13,7 +14,7 @@ html {
 
 body {
     margin: 0;
-    background: linear-gradient(to right bottom, rgb(77, 142, 255), rgb(243, 82, 255));
+    background: var(--background-color);
 }
 
 .tag-selector {
