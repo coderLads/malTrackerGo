@@ -26,6 +26,8 @@ Vue.component('tag-selector', {
             if (Cookies.get("users")) {
                 let cookieUsers = String(Cookies.get("users"));
                 $(".tag-input").importTags(cookieUsers);
+            } else {
+                $(".tag-input").importTags("Badtz13,");
             }
             loaded = true;
         }
@@ -111,6 +113,8 @@ let app = new Vue({
             // get user settings from cookies here
             if (Cookies.get("users")) {
                 this.$root.users = Cookies.get("users").split(",");
+            } else {
+                this.$root.users = ["Badtz13"];
             }
         },
         setupInterval() {
