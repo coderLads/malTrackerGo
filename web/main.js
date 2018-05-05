@@ -1,9 +1,10 @@
+let loaded = false;
+
 Vue.component('tag-selector', {
     props: ['users'],
     template: `
         <div class="tag-selector">
             <input class="tag-input" type="text">
-            <button @click="load">RE</button>
         </div>`,
     methods: {
         load: function () {
@@ -13,7 +14,6 @@ Vue.component('tag-selector', {
         },
         loadTags: function () {
             let self = this;
-            let loaded = this.$root.loaded;
             $('.tag-input').tagsInput({
                 onChange: _.debounce(function () {
                     if (loaded) {
@@ -27,7 +27,7 @@ Vue.component('tag-selector', {
                 let cookieUsers = String(Cookies.get("users"));
                 $(".tag-input").importTags(cookieUsers);
             }
-            this.$root.loaded = true;
+            loaded = true;
         }
     },
     mounted() {
@@ -61,7 +61,7 @@ Vue.component('feed-container', {
 let app = new Vue({
     el: '#app',
     data: {
-        loaded: false,
+        interval: 5000,
         users: [],
         feed: [],
         filtered: ['Plan to Watch', 'On Hold', 'Dropped']
@@ -112,10 +112,31 @@ let app = new Vue({
             if (Cookies.get("users")) {
                 this.$root.users = Cookies.get("users").split(",");
             }
+        },
+        setupInterval() {
+
+            let self = this;
+            let timer;
+
+            function refresh() {
+                clearTimeout(timer);
+                timer = setTimeout(function () {
+                    self.populateFeed();
+                    refresh();
+                }, self.interval);
+            };
+
+            refresh();
+
+            $(document).on('keypress, click, mousemove', refresh);
+
         }
     },
     beforeMount() {
         this.getCookies();
         this.populateFeed();
+    },
+    mounted() {
+        this.setupInterval();
     }
 })

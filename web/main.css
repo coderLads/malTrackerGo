@@ -1,7 +1,7 @@
 :root {
     --text: #fff;
     --background: rgba(0, 0, 0, .1);
-    --background-color: #2f286b;
+    --background-color: #6a5ed4;
     --corners: 3px;
     --font: 'Nunito', sans-serif;
 }
@@ -30,8 +30,63 @@ body {
     color: var(--text);
     height: 28px;
     margin-top: 15px;
-    width: 770px;
     padding: 0px 5px;
+}
+
+div.tagsinput {
+    width: 800px !important;
+    margin-top: 15px;
+    height: 30px !important;
+    min-height: 28px !important;
+}
+
+div.tagsinput span.tag {
+    float: left;
+    padding: 0px 10px;
+    height: 30px;
+    color: var(--text);
+    margin-right: 5px;
+    margin-bottom: 5px;
+    font-family: var(--font);
+    font-size: 13px;
+    border: 1px solid var(--text);
+    line-height: 2.4;
+    border-radius: var(--corners);
+}
+
+div.tagsinput span.tag a {
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 12px;
+    float: right;
+    margin-top: 1.2px;
+}
+
+div.tagsinput input {
+    font-size: 13px;
+    padding: 5px;
+    border: none;
+    background: none;
+    color: var(--text) !important;
+    outline: none;
+    width: 100px !important;
+    height: 22px;
+}
+
+div.tagsinput div {
+    display: block;
+    float: left;
+}
+
+.tags_clear {
+    clear: both;
+    width: 100%;
+    height: 0px;
+}
+
+.not_valid {
+    background: #FBD8DB !important;
+    color: #90111A !important;
 }
 
 button {
