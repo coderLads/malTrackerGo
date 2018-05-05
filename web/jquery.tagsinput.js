@@ -183,8 +183,8 @@
 			interactive: true,
 			defaultText: 'add a tag',
 			minChars: 0,
-			width: '300px',
-			height: '100px',
+			width: '800px',
+			height: 'auto',
 			autocomplete: {
 				selectFirst: false
 			},

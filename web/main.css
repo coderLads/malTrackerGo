@@ -19,7 +19,7 @@ body {
 
 .tag-selector {
     width: 800px;
-    height: 30px;
+    height: auto;
     margin: auto;
     display: flex;
 }
@@ -34,9 +34,7 @@ body {
 }
 
 div.tagsinput {
-    width: 800px !important;
-    margin-top: 15px;
-    height: 30px !important;
+    margin: 15px 0px;
     min-height: 28px !important;
 }
 
@@ -69,7 +67,7 @@ div.tagsinput input {
     background: none;
     color: var(--text) !important;
     outline: none;
-    width: 100px !important;
+    width: 65px !important;
     height: 22px;
 }
 
@@ -90,10 +88,10 @@ div.tagsinput div {
 }
 
 #update {
+    position: absolute;
     color: var(--text);
-    float: right;
-    margin-right: 30px;
-    margin-top: -10px;
+    right: 22px;
+    top: 22px;
 }
 
 button {
@@ -108,9 +106,9 @@ button {
 
 .feed-container {
     margin: auto;
-    margin-top: 6px;
     width: 800px;
     padding: 30px;
+    padding-top: 0px;
 }
 
 .feed-item {
