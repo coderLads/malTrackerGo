@@ -1,9 +1,9 @@
 :root {
     --text: #fff;
     --background: rgba(0, 0, 0, .1);
-    --background-color: #5fa3b9;
+    --background-color: #2f286b;
     --corners: 3px;
-    --font: 'Nunito', sans-serif !important;
+    --font: 'Nunito', sans-serif;
 }
 
 html {
@@ -21,6 +21,27 @@ body {
     width: 800px;
     height: 30px;
     margin: auto;
+    display: flex;
+}
+
+.tag-input {
+    background: none;
+    border: 1px solid var(--text);
+    color: var(--text);
+    height: 28px;
+    margin-top: 15px;
+    width: 770px;
+    padding: 0px 5px;
+}
+
+button {
+    margin-top: 15px;
+    height: 30px;
+    border: 1px solid var(--text);
+    width: 30px;
+    background: none;
+    color: var(--text);
+    border-left: 0px;
 }
 
 .feed-container {

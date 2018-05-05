@@ -3,7 +3,7 @@ Vue.component('tag-selector', {
     template: `
         <div class="tag-selector">
             <input class="tag-input" type="text">
-            <button @click="load">Load</button>
+            <button @click="load">Go</button>
         </div>`,
     methods: {
         load: function () {
@@ -12,19 +12,19 @@ Vue.component('tag-selector', {
             Cookies.set('users', $(".tag-input")[0].value);
             this.$root.populateFeed();
         },
-        fetchUsers: function () {
+        populate: function () {
             if (Cookies.get("users")) {
                 $(".tag-input")[0].value = Cookies.get("users");
             }
         }
     },
     mounted() {
-        this.fetchUsers();
+        this.populate();
     }
 });
 
 Vue.component('settings', {
-    template: `<button class="button" id="settings">Settings</button>`
+    template: `<!-- <button class="button" id="settings">Settings</button> -->`
 });
 
 Vue.component('feed-item', {
