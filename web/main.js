@@ -9,7 +9,9 @@ Vue.component('tag-selector', {
     methods: {
         load: function () {
             this.$root.users = _.compact($(".tag-input")[0].value.split(","));
-            Cookies.set('users', $(".tag-input")[0].value);
+            Cookies.set('users', $(".tag-input")[0].value, {
+                expires: 360
+            });
             this.$root.populateFeed();
         },
         loadTags: function () {

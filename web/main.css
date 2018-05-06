@@ -41,14 +41,13 @@ div.tagsinput {
 div.tagsinput span.tag {
     float: left;
     padding: 0px 10px;
-    height: 30px;
+    height: 28px;
     color: var(--text);
     margin-right: 5px;
-    margin-bottom: 5px;
     font-family: var(--font);
     font-size: 13px;
     border: 1px solid var(--text);
-    line-height: 2.4;
+    line-height: 2.3;
     border-radius: var(--corners);
 }
 
@@ -63,12 +62,12 @@ div.tagsinput span.tag a {
 div.tagsinput input {
     font-size: 13px;
     padding: 5px;
-    border: none;
+    border: 1px solid rgba(0,0,0,0);
     background: none;
     color: var(--text) !important;
     outline: none;
     width: 65px !important;
-    height: 22px;
+    height: 18px;
 }
 
 div.tagsinput div {
@@ -83,8 +82,8 @@ div.tagsinput div {
 }
 
 .not_valid {
-    background: #FBD8DB !important;
-    color: #90111A !important;
+    border: 1px solid red !important;
+    border-radius: var(--corners);
 }
 
 #update {
@@ -92,6 +91,7 @@ div.tagsinput div {
     color: var(--text);
     right: 22px;
     top: 22px;
+    display: none;
 }
 
 button {
