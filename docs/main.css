@@ -141,6 +141,13 @@ a {
     margin-top: 10px;
 }
 
+.title {
+    max-width: 500px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
 .status,
 .user {
     margin-top: 20px;
