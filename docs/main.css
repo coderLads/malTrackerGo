@@ -1,7 +1,7 @@
 :root {
     --text: #fff;
     --background: rgba(0, 0, 0, .1);
-    --background-color: #c299d0;
+    --background-color: #9159da;
     --corners: 3px;
     --font: 'Nunito', sans-serif;
 }
@@ -22,6 +22,7 @@ body {
     height: auto;
     margin: auto;
     display: flex;
+    padding: 0px 30px;
 }
 
 .tag-input {

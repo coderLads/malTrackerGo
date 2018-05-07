@@ -65,7 +65,7 @@ Vue.component('feed-container', {
 let app = new Vue({
     el: '#app',
     data: {
-        interval: 5000,
+        interval: 30000,
         users: [],
         feed: [],
         filtered: ['Plan to Watch', 'On Hold', 'Dropped']
@@ -96,7 +96,7 @@ let app = new Vue({
                                 status: $(items[i].getElementsByTagName("description")[0]).text(),
                                 user: users[k],
                                 link: $(items[i].getElementsByTagName("link")[0]).text(),
-                                time: $(items[i].getElementsByTagName("pubDate")[0]).text(),
+                                time: new Date($(items[i].getElementsByTagName("pubDate")[0]).text()).toLocaleString(),
                                 title: $(items[i].getElementsByTagName("title")[0]).text(),
                                 userlink: "https://myanimelist.net/profile/" + users[k]
                             });
