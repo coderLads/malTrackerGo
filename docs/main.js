@@ -65,9 +65,10 @@ Vue.component('feed-container', {
 let app = new Vue({
     el: '#app',
     data: {
-        interval: 30000,
         users: [],
         feed: [],
+        interval: 30000,
+        limit: 15,
         filtered: ['Plan to Watch', 'On Hold', 'Dropped']
     },
     methods: {
@@ -108,7 +109,7 @@ let app = new Vue({
                 feed.sort(function (a, b) {
                     return new Date(a.time) - new Date(b.time);
                 });
-                this.$root.feed = feed.reverse();
+                this.$root.feed = feed.reverse().slice(0, this.$root.limit);
             });
         },
         getCookies: function () {
