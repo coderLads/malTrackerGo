@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css?family=Nunito');
 :root {
     --text: #fff;
     --background: rgba(0, 0, 0, .1);
@@ -63,7 +62,7 @@ div.tagsinput span.tag a {
 div.tagsinput input {
     font-size: 13px;
     padding: 5px;
-    border: 1px solid rgba(0, 0, 0, 0);
+    border: 1px solid rgba(0,0,0,0);
     background: none;
     color: var(--text) !important;
     outline: none;
