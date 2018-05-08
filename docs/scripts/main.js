@@ -58,14 +58,16 @@ Vue.component('feed-item', {
         fetchImage(id) {
             let self = this;
             axios.get("https://api.jikan.moe/anime/" + id).then(response => {
-                console.log(response.data['image_url']);
-                console.log($(self.$el).find(".image").css({
+                $(self.$el).find(".image").css({
                     "background-image": 'url(' + response.data['image_url'] + ')'
-                }));
+                });
             });
         }
     },
     mounted() {
+        this.fetchImage(this.link.split("/")[4]);
+    },
+    updated() {
         this.fetchImage(this.link.split("/")[4]);
     }
 });
