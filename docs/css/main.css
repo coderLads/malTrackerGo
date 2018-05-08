@@ -141,7 +141,8 @@ a {
     margin-top: 10px;
 }
 
-.image {
+.image,
+.image-wrapper {
     grid-area: image;
     height: 100%;
     background-size: 100%;
