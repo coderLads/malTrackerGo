@@ -47,11 +47,26 @@ Vue.component('feed-item', {
     props: ['title', 'fmttime', 'status', 'user', 'link', 'userlink'],
     template: `
         <div class="feed-item">
+            <div class="image"></div>
             <div class="title"><a :href="link">{{title}}</a></div>
             <div class="time">{{fmttime}}</div>
             <div class="status">{{status}}</div>
             <div class="user"><a :href="userlink">{{user}}</a></div>
-        </div>`
+        </div>`,
+    methods: {
+        fetchImage(id) {
+            let self = this;
+            axios.get("https://api.jikan.moe/anime/" + id).then(response => {
+                console.log(response.data['image_url']);
+                console.log($(self.$el).find(".image").css({
+                    "background-image": 'url(' + response.data['image_url'] + ')'
+                }));
+            });
+        }
+    },
+    mounted() {
+        this.fetchImage(this.link.split("/")[4]);
+    }
 });
 
 Vue.component('feed-container', {
@@ -87,7 +102,7 @@ let app = new Vue({
             let promiseList = [];
 
             for (let k = 0; k < RSS.length; k++) {
-                promiseList.push(axios.get("https://cors-anywhere.herokuapp.com/" + RSS[k]).then(response => {
+                promiseList.push(axios.get("http://vyst.rocket-air.com/" + RSS[k]).then(response => {
                     let parser = new DOMParser();
                     let xmlDoc = parser.parseFromString(response.data, "text/xml");
                     let items = xmlDoc.getElementsByTagName("item");
@@ -140,7 +155,7 @@ let app = new Vue({
 
         },
         updateLog() {
-            axios.get("https://cors-anywhere.herokuapp.com/https://github.com/coderLads/malTrackerGo/commits/master.atom").then(response => {
+            axios.get("http://vyst.rocket-air.com/https://github.com/coderLads/malTrackerGo/commits/master.atom").then(response => {
                 let parser = new DOMParser();
                 let xmlDoc = parser.parseFromString(response.data, "text/xml");
                 let items = xmlDoc.getElementsByTagName("entry");

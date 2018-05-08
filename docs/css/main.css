@@ -116,11 +116,11 @@ button {
 .feed-item {
     height: 90px;
     display: grid;
-    grid-template-columns: auto auto;
-    grid-template-rows: auto auto;
     background: var(--background);
-    border-radius: var(--corners);
     color: var(--text);
+    border-radius: var(--corners);
+    grid-template-areas: "image title time" "image status user";
+    grid-template-columns: 74px auto auto;
 }
 
 .feed-item+.feed-item {
@@ -128,7 +128,7 @@ button {
 }
 
 .feed-item>* {
-    margin: 0px 10px;
+    margin-right: 10px;
 }
 
 a {
@@ -141,11 +141,33 @@ a {
     margin-top: 10px;
 }
 
+.image {
+    grid-area: image;
+    height: 100%;
+    background-size: 100%;
+    height: 90px;
+    width: 64px;
+    border-radius: var(--corners) 0px 0px var(--corners);
+}
+
 .title {
     max-width: 500px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+    grid-area: title;
+}
+
+.status {
+    grid-area: status;
+}
+
+.user {
+    grid-area: user;
+}
+
+.time {
+    grid-area: time;
 }
 
 .status,
