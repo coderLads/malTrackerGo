@@ -48,7 +48,7 @@ Vue.component('feed-item', {
     props: ['title', 'fmttime', 'status', 'user', 'link', 'userlink'],
     template: `
         <div class="feed-item">
-            <div class="image"></div>
+            <a class="image-wrapper" :href="link"><div class="image"></div></a>
             <div class="title"><a :href="link">{{title}}</a></div>
             <div class="time">{{fmttime}}</div>
             <div class="status">{{status}}</div>
