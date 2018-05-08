@@ -44,11 +44,11 @@ Vue.component('settings', {
 });
 
 Vue.component('feed-item', {
-    props: ['title', 'time', 'status', 'user', 'link', 'userlink'],
+    props: ['title', 'fmttime', 'status', 'user', 'link', 'userlink'],
     template: `
         <div class="feed-item">
             <div class="title"><a :href="link">{{title}}</a></div>
-            <div class="time">{{time}}</div>
+            <div class="time">{{fmttime}}</div>
             <div class="status">{{status}}</div>
             <div class="user"><a :href="userlink">{{user}}</a></div>
         </div>`
@@ -57,7 +57,7 @@ Vue.component('feed-item', {
 Vue.component('feed-container', {
     template: `
         <div class="feed-container">
-            <feed-item v-for="item in $root.feed" :key="item.content" :title="item.title" :time="item.time" :status="item.status" :user="item.user" :link="item.link" :userlink="item.userlink"></feed-item>
+            <feed-item v-for="item in $root.feed" :key="item.content" :title="item.title" :fmttime="item.fmttime" :status="item.status" :user="item.user" :link="item.link" :userlink="item.userlink"></feed-item>
         </div>`
 });
 
@@ -98,6 +98,7 @@ let app = new Vue({
                                 user: users[k],
                                 link: $(items[i].getElementsByTagName("link")[0]).text(),
                                 time: new Date($(items[i].getElementsByTagName("pubDate")[0]).text()).toLocaleString(),
+                                fmttime: moment($(items[i].getElementsByTagName("pubDate")[0]).text()).calendar(),
                                 title: $(items[i].getElementsByTagName("title")[0]).text(),
                                 userlink: "https://myanimelist.net/profile/" + users[k]
                             });
