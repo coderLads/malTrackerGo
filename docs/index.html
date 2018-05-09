@@ -46,20 +46,21 @@
 
 <body>
     <div id="app">
-        <nav>
+        <nav class="blur">
             <tag-selector></tag-selector>
             <settings></settings>
             <div id="update"></div>
         </nav>
-        <main>
+        <main class="blur">
             <feed-container></feed-container>
-            <div class="settings-pane" style="display:none">
-                <div class="settings-content">
-                    <div class="settings-title">Settings</div>
-                    <div class="settings-control">Options go here</div>
-                </div>
-            </div>
         </main>
+        <div class="settings-cover" style="display:none"></div>
+        <div class="settings-pane" style="display:none">
+            <div class="settings-content">
+                <div class="settings-title">Settings</div>
+                <div class="settings-control">Options go here</div>
+            </div>
+        </div>
     </div>
 </body>
 <script src="scripts/main.js"></script>

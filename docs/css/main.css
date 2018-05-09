@@ -130,6 +130,14 @@ button:focus {
     outline: 0;
 }
 
+.settings-cover {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: calc(100% - 300px);
+}
+
 .settings-pane {
     position: fixed;
     min-height: 100%;

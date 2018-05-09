@@ -47,6 +47,10 @@ Vue.component('settings', {
             $($(".settings-pane")[0]).toggle('drop', {
                 direction: 'right'
             });
+            $($(".settings-cover")[0]).toggle('fade');
+            $(".blur").css({
+                filter: "blur(2px) brightness(90%)"
+            });
         }
     }
 });
@@ -190,6 +194,10 @@ $(document).mouseup(function (e) {
     if (!$('.settings-pane').is(e.target) && $('.settings-pane').has(e.target).length === 0 && $('.settings-pane').is(':visible') && !$('#settings').is(e.target)) {
         $('.settings-pane').toggle('drop', {
             direction: 'right'
+        });
+        $($(".settings-cover")[0]).toggle('fade');
+        $(".blur").css({
+            filter: "none"
         });
     }
 });
