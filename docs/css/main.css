@@ -131,13 +131,25 @@ button:focus {
 }
 
 .settings-pane {
-    position: absolute;
+    position: fixed;
     min-height: 100%;
     width: 300px;
     top: 0;
     right: 0;
     background: var(--background);
     color: var(--text);
+}
+
+.settings-title {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 20px;
+    =: brightness(0%)
+}
+
+.settings-control {
+    margin: 0px 15px;
+    margin-top: 15px;
 }
 
 .feed-container {

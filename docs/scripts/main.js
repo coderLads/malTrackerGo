@@ -41,16 +41,12 @@ Vue.component('tag-selector', {
 });
 
 Vue.component('settings', {
-    template: `
-        <div class="settings">
-            <button @click="toggle" class="button" id="settings"><i data-feather="settings"></i></button>
-            <div class="settings-pane" style="display:none">Stuff goes here</div>
-        </div>`,
+    template: `<button @click="toggle" class="button" id="settings"><i data-feather="settings"></i></button>`,
     methods: {
         toggle: function () {
-            console.log($($(this.$el).find(".settings-pane")[0]).toggle('drop', {
+            $($(".settings-pane")[0]).toggle('drop', {
                 direction: 'right'
-            }));
+            });
         }
     }
 });
