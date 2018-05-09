@@ -7,6 +7,12 @@
     --font: 'Nunito', sans-serif;
 }
 
+.feather {
+    height: 30px;
+    margin-top: -1px;
+    margin-right: 3p;
+}
+
 html {
     min-height: 100%;
     font-family: var(--font);
@@ -23,16 +29,21 @@ body {
     background: var(--background);
 }
 
+nav {
+    display: flex;
+    margin: auto;
+    width: 800px;
+}
+
 input {
     font-family: var(--font);
 }
 
 .tag-selector {
-    width: 800px;
+    width: 770px;
     height: auto;
     margin: auto;
     display: flex;
-    padding: 0px 30px;
 }
 
 .tag-input {
@@ -108,10 +119,24 @@ div.tagsinput div {
 button {
     margin-top: 15px;
     height: 30px;
-    border: 1px solid var(--text);
+    border: 1px solid rgba(0, 0, 0, 0);
     border-radius: var(--corners);
     width: 30px;
     background: none;
+    color: var(--text);
+}
+
+button:focus {
+    outline: 0;
+}
+
+.settings-pane {
+    position: absolute;
+    min-height: 100%;
+    width: 300px;
+    top: 0;
+    right: 0;
+    background: var(--background);
     color: var(--text);
 }
 

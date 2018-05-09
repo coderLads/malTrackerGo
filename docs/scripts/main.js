@@ -41,7 +41,18 @@ Vue.component('tag-selector', {
 });
 
 Vue.component('settings', {
-    template: `<!-- <button class="button" id="settings">Settings</button> -->`
+    template: `
+        <div class="settings">
+            <button @click="toggle" class="button" id="settings"><i data-feather="settings"></i></button>
+            <div class="settings-pane" style="display:none">Stuff goes here</div>
+        </div>`,
+    methods: {
+        toggle: function () {
+            console.log($($(this.$el).find(".settings-pane")[0]).toggle('drop', {
+                direction: 'right'
+            }));
+        }
+    }
 });
 
 Vue.component('feed-item', {
@@ -175,3 +186,5 @@ let app = new Vue({
         this.setupInterval();
     }
 })
+
+feather.replace();
