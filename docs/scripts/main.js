@@ -184,3 +184,12 @@ let app = new Vue({
 })
 
 feather.replace();
+
+//function to close .settings-pane when it is visible and clicked outside of
+$(document).mouseup(function (e) {
+    if (!$('.settings-pane').is(e.target) && $('.settings-pane').has(e.target).length === 0 && $('.settings-pane').is(':visible') && !$('#settings').is(e.target)) {
+        $('.settings-pane').toggle('drop', {
+            direction: 'right'
+        });
+    }
+});
