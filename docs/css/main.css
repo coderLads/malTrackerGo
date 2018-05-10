@@ -7,6 +7,10 @@
     --font: 'Nunito', sans-serif;
 }
 
+::-webkit-scrollbar {
+    display: none;
+}
+
 .feather {
     height: 30px;
     margin-top: -1px;
@@ -157,6 +161,19 @@ button:focus {
 .settings-control {
     margin: 0px 15px;
     margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#sliderDisplay {
+    text-align: center;
+    padding-bottom: 5px;
+}
+
+#feedSize {
+    width: 240px;
+    margin-left: 15px;
 }
 
 .feed-container {

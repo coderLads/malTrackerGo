@@ -51,6 +51,9 @@ Vue.component('settings', {
             $(".blur").css({
                 filter: "blur(2px) brightness(90%)"
             });
+            $('body').css({
+                overflow: "hidden"
+            });
         }
     }
 });
@@ -149,8 +152,12 @@ let app = new Vue({
             } else {
                 this.$root.users = ["Badtz13"];
             }
+            if (Cookies.get("limit")) {
+                this.$root.limit = Cookies.get("limit");
+            }
+
         },
-        setupInterval() {
+        setupInterval: function () {
 
             let self = this;
             let timer;
@@ -168,36 +175,60 @@ let app = new Vue({
             $(document).on('keypress, click, mousemove', refresh);
 
         },
-        updateLog() {
+        updateLog: function () {
             axios.get(host + "https://github.com/coderLads/malTrackerGo/commits/master.atom").then(response => {
                 let parser = new DOMParser();
                 let xmlDoc = parser.parseFromString(response.data, "text/xml");
                 let items = xmlDoc.getElementsByTagName("entry");
                 $("#update").text("Last commit: " + $.trim($(items[0].getElementsByTagName("title")).text()));
             });
+        },
+        populateSettings: function () {
+            let self = this;
+
+            // setup feedsize slider
+            $("#feedSize").slider({
+                min: 5,
+                max: 50,
+                step: 5,
+                value: self.limit,
+                slide: function (event, ui) {
+                    $('#sliderDisplay').html(ui.value);
+                    self.limit = ui.value;
+                    Cookies.set('limit', ui.value);
+                }
+            });
+
+            $('#sliderDisplay').html(this.limit);
+
+            // add feather icons
+            feather.replace();
+
+            //function to close .settings-pane when it is visible and clicked outside of
+            $(document).mouseup(function (e) {
+                if (!$('.settings-pane').is(e.target) && $('.settings-pane').has(e.target).length === 0 && $('.settings-pane').is(':visible') && !$('#settings').is(e.target)) {
+                    $('.settings-pane').toggle('drop', {
+                        direction: 'right'
+                    });
+                    $($(".settings-cover")[0]).toggle('fade');
+                    $(".blur").css({
+                        filter: "none"
+                    });
+                    $('body').css({
+                        overflow: "auto"
+                    });
+                    self.populateFeed();
+                }
+            });
         }
     },
     beforeMount() {
         this.getCookies();
         this.populateFeed();
-        this.updateLog();
+        // this.updateLog();
     },
     mounted() {
         this.setupInterval();
-    }
-})
-
-feather.replace();
-
-//function to close .settings-pane when it is visible and clicked outside of
-$(document).mouseup(function (e) {
-    if (!$('.settings-pane').is(e.target) && $('.settings-pane').has(e.target).length === 0 && $('.settings-pane').is(':visible') && !$('#settings').is(e.target)) {
-        $('.settings-pane').toggle('drop', {
-            direction: 'right'
-        });
-        $($(".settings-cover")[0]).toggle('fade');
-        $(".blur").css({
-            filter: "none"
-        });
+        this.populateSettings();
     }
 });
