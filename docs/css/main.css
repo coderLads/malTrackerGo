@@ -73,7 +73,7 @@ div.tagsinput span.tag {
     font-family: var(--font);
     font-size: 13px;
     border: 1px solid var(--text);
-    line-height: 2.3;
+    line-height: 2.35;
     border-radius: var(--corners);
 }
 
