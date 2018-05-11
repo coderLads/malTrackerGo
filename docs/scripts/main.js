@@ -104,7 +104,7 @@ let app = new Vue({
         feed: [],
         interval: 30000,
         limit: 15,
-        filtered: ['Plan to Watch', 'On Hold', 'Dropped'],
+        filtered: [],
         color1: "",
         color2: "",
     },
@@ -129,7 +129,14 @@ let app = new Vue({
                     let xmlDoc = parser.parseFromString(response.data, "text/xml");
                     let items = xmlDoc.getElementsByTagName("item");
                     for (let i = 0; i < items.length; i++) {
+
+                        if ($(items[i].getElementsByTagName("description")[0]).text().split(" - ")[0] == "") {
+                            $(items[i].getElementsByTagName("description")[0]).text("Re-Watching - " + $(items[i].getElementsByTagName("description")[0]).text().split(" - ")[1]);
+                            console.log($(items[i].getElementsByTagName("description")[0]).text());
+                        }
+
                         if (!filtered.includes($(items[i].getElementsByTagName("description")[0]).text().split(" - ")[0])) {
+                            console.log($(items[i].getElementsByTagName("description")[0]).text().split(" - ")[0]);
                             feed.push({
                                 status: $(items[i].getElementsByTagName("description")[0]).text(),
                                 user: users[k],
@@ -155,6 +162,8 @@ let app = new Vue({
             Cookies.get("users") ? this.users = Cookies.get("users").split(",") : this.users = ["Badtz13"];
 
             Cookies.get("limit") ? this.limit = Cookies.get("limit") : true;
+
+            Cookies.get("filtered") ? this.filtered = Cookies.get("filtered").split(",") : this.filtered = ['Plan to Watch', 'On-Hold', 'Dropped'];
 
             Cookies.get("color1") ? this.color1 = Cookies.get("color1") : this.color1 = "#CE9FFC";
             Cookies.get("color2") ? this.color2 = Cookies.get("color2") : this.color2 = "#5a4fcc";
@@ -211,6 +220,14 @@ let app = new Vue({
             // add feather icons
             feather.replace();
 
+            // setup checkboxes
+            $("#plan").prop("checked", !self.filtered.includes("Plan to Watch"));
+            $("#watch").prop("checked", !self.filtered.includes("Watching"));
+            $("#hold").prop("checked", !self.filtered.includes("On-Hold"));
+            $("#drop").prop("checked", !self.filtered.includes("Dropped"));
+            $("#complete").prop("checked", !self.filtered.includes("Completed"));
+            $("#rewatch").prop("checked", !self.filtered.includes("Re-Watching"));
+
             //function to close .settings-pane when it is visible and clicked outside of
             $(document).mouseup(function (e) {
                 if ($('.settings-cover').is(e.target)) {
@@ -224,7 +241,23 @@ let app = new Vue({
                     $('body').css({
                         overflow: "auto"
                     });
+
+                    self.filtered = [];
+
+                    $("#plan").prop("checked") ? true : self.filtered.push("Plan to Watch");
+                    $("#watch").prop("checked") ? true : self.filtered.push("Watching");
+                    $("#hold").prop("checked") ? true : self.filtered.push("On-Hold");
+                    $("#drop").prop("checked") ? true : self.filtered.push("Dropped");
+                    $("#complete").prop("checked") ? true : self.filtered.push("Completed");
+                    $("#rewatch").prop("checked") ? true : self.filtered.push("Re-Watching");
+
+                    Cookies.set("filtered", self.filtered.join(","));
+                    console.log(self.filtered.join(","));
+
+                    // reload feed
                     self.populateFeed();
+
+                    // apply and save colors
                     self.color1 = "#" + $('#color1').val();
                     self.color2 = "#" + $('#color2').val();
                     Cookies.set("color1", "#" + $('#color1').val());

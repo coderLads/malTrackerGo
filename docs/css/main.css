@@ -176,10 +176,14 @@ button:focus {
     margin-left: 15px;
 }
 
-input[type=checkbox] {
+.filter-box {
     height: 15px;
     width: 15px;
     margin: 0;
+}
+
+.jscolor {
+    width: 128px;
 }
 
 .feed-container {
