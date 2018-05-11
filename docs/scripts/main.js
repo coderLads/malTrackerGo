@@ -54,6 +54,9 @@ Vue.component('settings', {
             $('body').css({
                 overflow: "hidden"
             });
+
+            document.getElementById("color1").jscolor.fromString(this.$root.color1);
+            document.getElementById("color2").jscolor.fromString(this.$root.color2);
         }
     }
 });
@@ -102,6 +105,8 @@ let app = new Vue({
         interval: 30000,
         limit: 15,
         filtered: ['Plan to Watch', 'On Hold', 'Dropped'],
+        color1: "",
+        color2: "",
     },
     methods: {
         populateFeed: function () {
@@ -147,14 +152,16 @@ let app = new Vue({
         },
         getCookies: function () {
             // get user settings from cookies here
-            if (Cookies.get("users")) {
-                this.$root.users = Cookies.get("users").split(",");
-            } else {
-                this.$root.users = ["Badtz13"];
-            }
-            if (Cookies.get("limit")) {
-                this.$root.limit = Cookies.get("limit");
-            }
+            Cookies.get("users") ? this.users = Cookies.get("users").split(",") : this.users = ["Badtz13"];
+
+            Cookies.get("limit") ? this.limit = Cookies.get("limit") : true;
+
+            Cookies.get("color1") ? this.color1 = Cookies.get("color1") : this.color1 = "#CE9FFC";
+            Cookies.get("color2") ? this.color2 = Cookies.get("color2") : this.color2 = "#5a4fcc";
+
+            let html = document.getElementsByTagName('html')[0];
+            html.style.setProperty("--background-one", this.color1);
+            html.style.setProperty("--background-two", this.color2);
 
         },
         setupInterval: function () {
@@ -206,7 +213,7 @@ let app = new Vue({
 
             //function to close .settings-pane when it is visible and clicked outside of
             $(document).mouseup(function (e) {
-                if (!$('.settings-pane').is(e.target) && $('.settings-pane').has(e.target).length === 0 && $('.settings-pane').is(':visible') && !$('#settings').is(e.target)) {
+                if ($('.settings-cover').is(e.target)) {
                     $('.settings-pane').toggle('drop', {
                         direction: 'right'
                     });
@@ -218,6 +225,13 @@ let app = new Vue({
                         overflow: "auto"
                     });
                     self.populateFeed();
+                    self.color1 = "#" + $('#color1').val();
+                    self.color2 = "#" + $('#color2').val();
+                    Cookies.set("color1", "#" + $('#color1').val());
+                    Cookies.set("color2", "#" + $('#color2').val());
+                    let html = document.getElementsByTagName('html')[0];
+                    html.style.setProperty("--background-one", self.color1);
+                    html.style.setProperty("--background-two", self.color2);
                 }
             });
         }

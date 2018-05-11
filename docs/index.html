@@ -26,6 +26,7 @@
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
     <script src="scripts/moment.min.js"></script>
     <script src="scripts/jquery.tagsinput.js"></script>
+    <script src="scripts/jscolor.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.7.0/feather.min.js'></script>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -62,17 +63,39 @@
                 <div class="settings-control">
                     <div>
                         <p>Filter:</p>
-                        <input type="checkbox" name="" id="">
-                        <input type="checkbox" name="" id="">
-                        <input type="checkbox" name="" id="">
-                        <input type="checkbox" name="" id="">
-                        <input type="checkbox" name="" id="">
-                        <input type="checkbox" name="" id="">
+                        <div>
+                            <input type="checkbox" name="plan" id="plan">
+                            <label class="checkbox-label" for="plan">Plan To Watch</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" name="watch" id="watch">
+                            <label class="checkbox-label" for="watch">Watching</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" name="hold" id="hold">
+                            <label class="checkbox-label" for="hold">On Hold</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" name="drop" id="drop">
+                            <label class="checkbox-label" for="drop">Dropped</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" name="complete" id="complete">
+                            <label class="checkbox-label" for="complete">Completed</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" name="rewatch" id="rewatch">
+                            <label class="checkbox-label" for="rewatch">Rewatching</label>
+                        </div>
                     </div>
                     <div>
                         <p>Feed size:</p>
                         <div id="sliderDisplay"></div>
                         <div id="feedSize"></div>
+                    </div>
+                    <div>
+                        <input type="text" id="color1" class="jscolor" />
+                        <input type="text" id="color2" class="jscolor" />
                     </div>
                 </div>
             </div>
