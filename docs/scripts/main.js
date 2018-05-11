@@ -132,11 +132,9 @@ let app = new Vue({
 
                         if ($(items[i].getElementsByTagName("description")[0]).text().split(" - ")[0] == "") {
                             $(items[i].getElementsByTagName("description")[0]).text("Re-Watching - " + $(items[i].getElementsByTagName("description")[0]).text().split(" - ")[1]);
-                            console.log($(items[i].getElementsByTagName("description")[0]).text());
                         }
 
                         if (!filtered.includes($(items[i].getElementsByTagName("description")[0]).text().split(" - ")[0])) {
-                            console.log($(items[i].getElementsByTagName("description")[0]).text().split(" - ")[0]);
                             feed.push({
                                 status: $(items[i].getElementsByTagName("description")[0]).text(),
                                 user: users[k],
@@ -252,7 +250,6 @@ let app = new Vue({
                     $("#rewatch").prop("checked") ? true : self.filtered.push("Re-Watching");
 
                     Cookies.set("filtered", self.filtered.join(","));
-                    console.log(self.filtered.join(","));
 
                     // reload feed
                     self.populateFeed();
