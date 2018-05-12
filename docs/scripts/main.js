@@ -170,6 +170,46 @@ let app = new Vue({
             html.style.setProperty("--background-one", this.color1);
             html.style.setProperty("--background-two", this.color2);
 
+                var link = document.getElementById('favicon');
+                var canvas = new fabric.StaticCanvas('favCanvas');
+            
+                var circle = new fabric.Circle({
+                    left: 0,
+                    top: 0,
+                    radius: 50
+                });
+            
+                circle.setGradient('fill', {
+                    x1: 0,
+                    y1: 0,
+                    x2: circle.width,
+                    y2: circle.height,
+                    colorStops: {
+                        0: this.color1,
+                        1: this.color2
+                    }
+                });
+                canvas.add(circle);
+                var text = new fabric.Text("MAL", {
+                    fill: '#fff'
+                });
+                canvas.add(text);
+                text.center();
+                var mal = new FontFaceObserver('MyAnimeListLogo')
+                mal.load()
+                .then(function() {
+                    // when font is loaded, use it.
+                    text.set("fontFamily", 'MyAnimeListLogo');
+                    canvas.requestRenderAll();
+                    var dataURL = canvas.toDataURL({
+                        format: 'png'
+                    });
+                    link.href = dataURL;
+                }).catch(function(e) {
+                    link.href = '../images/icon.png';
+                });
+            
+
         },
         setupInterval: function () {
 
@@ -262,6 +302,45 @@ let app = new Vue({
                     let html = document.getElementsByTagName('html')[0];
                     html.style.setProperty("--background-one", self.color1);
                     html.style.setProperty("--background-two", self.color2);
+
+                    var link = document.getElementById('favicon');
+                    var canvas = new fabric.StaticCanvas('favCanvas');
+                
+                    var circle = new fabric.Circle({
+                        left: 0,
+                        top: 0,
+                        radius: 50
+                    });
+                
+                    circle.setGradient('fill', {
+                        x1: 0,
+                        y1: 0,
+                        x2: circle.width,
+                        y2: circle.height,
+                        colorStops: {
+                            0: "#" + $('#color1').val(),
+                            1: "#" + $('#color2').val()
+                        }
+                    });
+                    canvas.add(circle);
+                    var text = new fabric.Text("MAL", {
+                        fill: '#fff'
+                    });
+                    canvas.add(text);
+                    text.center();
+                    var mal = new FontFaceObserver('MyAnimeListLogo')
+                    mal.load()
+                    .then(function() {
+                        // when font is loaded, use it.
+                        text.set("fontFamily", 'MyAnimeListLogo');
+                        canvas.requestRenderAll();
+                        var dataURL = canvas.toDataURL({
+                            format: 'png'
+                        });
+                        link.href = dataURL;
+                    }).catch(function(e) {
+                        link.href = '../images/icon.png';
+                    });
                 }
             });
         }

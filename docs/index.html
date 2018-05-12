@@ -15,7 +15,7 @@
 
     <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css' />
-    <link rel="icon" type="image/png" href="images/icon.png" />
+    <link id='favicon' rel="icon" type="image/png" href="images/icon.png" />
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -27,6 +27,8 @@
     <script src="scripts/moment.min.js"></script>
     <script src="scripts/jquery.tagsinput.js"></script>
     <script src="scripts/jscolor.js"></script>
+    <script src="scripts/fabric.min.js"></script>
+    <script src='scripts/fontfaceobserver.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.7.0/feather.min.js'></script>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -47,6 +49,7 @@
 </head>
 
 <body>
+    <canvas id='favCanvas' height='100' width='100'></canvas>
     <div id="app">
         <nav class="blur">
             <tag-selector></tag-selector>

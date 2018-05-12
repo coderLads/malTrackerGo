@@ -7,6 +7,11 @@
     --font: 'Nunito', sans-serif;
 }
 
+@font-face {
+    font-family: "MyAnimeListLogo";
+    src: url("fonts/MAL.ttf") format("truetype");
+}
+
 ::-webkit-scrollbar {
     display: none;
 }
@@ -42,6 +47,10 @@ nav {
 
 input {
     font-family: var(--font);
+}
+
+#favCanvas {
+    display: none;
 }
 
 .tag-selector {
