@@ -9,7 +9,7 @@
 
 @font-face {
     font-family: "MyAnimeListLogo";
-    src: url("fonts/MAL.ttf") format("truetype");
+    src: url("fonts/mal.ttf") format("truetype");
 }
 
 ::-webkit-scrollbar {
