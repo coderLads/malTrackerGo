@@ -266,7 +266,7 @@ let app = new Vue({
                     html.style.setProperty("--background-one", self.color1);
                     html.style.setProperty("--background-two", self.color2);
 
-                    this.$root.generateFavicon("#" + $('#color1').val(), "#" + $('#color2').val());
+                    self.$root.generateFavicon("#" + $('#color1').val(), "#" + $('#color2').val());
                 }
             });
         },
