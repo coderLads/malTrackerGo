@@ -1,6 +1,6 @@
 let loaded = false;
-// let host = "https://cors-anywhere.herokuapp.com/";
-let host = "http://vyst.rocket-air.com:8123/proxy?url=";
+let host = "https://cors-anywhere.herokuapp.com/";
+// let host = "http://vyst.rocket-air.com:8123/proxy?url=";
 
 Vue.component('tag-selector', {
     props: ['users'],
