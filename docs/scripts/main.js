@@ -1,5 +1,6 @@
 let loaded = false;
-let host = "https://cors-anywhere.herokuapp.com/";
+// let host = "https://cors-anywhere.herokuapp.com/";
+let host = "http://vyst.rocket-air.com:8123/proxy?url=";
 
 Vue.component('tag-selector', {
     props: ['users'],
@@ -269,35 +270,35 @@ let app = new Vue({
                 }
             });
         },
-        generateFavicon: function(color1, color2) {
+        generateFavicon: function (color1, color2) {
             var link = document.getElementById('favicon');
-                var canvas = new fabric.StaticCanvas('favCanvas');
-            
-                var circle = new fabric.Circle({
-                    left: 0,
-                    top: 0,
-                    radius: 50
-                });
-            
-                circle.setGradient('fill', {
-                    x1: 0,
-                    y1: 0,
-                    x2: circle.width,
-                    y2: circle.height,
-                    colorStops: {
-                        0: color1,
-                        1: color2
-                    }
-                });
-                canvas.add(circle);
-                var text = new fabric.Text("MAL", {
-                    fill: '#fff'
-                });
-                canvas.add(text);
-                text.center();
-                var mal = new FontFaceObserver('MyAnimeListLogo')
-                mal.load()
-                .then(function() {
+            var canvas = new fabric.StaticCanvas('favCanvas');
+
+            var circle = new fabric.Circle({
+                left: 0,
+                top: 0,
+                radius: 50
+            });
+
+            circle.setGradient('fill', {
+                x1: 0,
+                y1: 0,
+                x2: circle.width,
+                y2: circle.height,
+                colorStops: {
+                    0: color1,
+                    1: color2
+                }
+            });
+            canvas.add(circle);
+            var text = new fabric.Text("MAL", {
+                fill: '#fff'
+            });
+            canvas.add(text);
+            text.center();
+            var mal = new FontFaceObserver('MyAnimeListLogo')
+            mal.load()
+                .then(function () {
                     // when font is loaded, use it.
                     text.set("fontFamily", 'MyAnimeListLogo');
                     canvas.requestRenderAll();
@@ -305,7 +306,7 @@ let app = new Vue({
                         format: 'png'
                     });
                     link.href = dataURL;
-                }).catch(function(e) {
+                }).catch(function (e) {
                     link.href = '../images/icon.png';
                 });
         }
