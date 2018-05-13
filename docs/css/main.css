@@ -194,6 +194,9 @@ button:focus {
 
 .jscolor {
     width: 128px;
+    border: none;
+    border-radius: var(--corners);
+    padding: 0px 2px;
 }
 
 .feed-container {
