@@ -1,6 +1,7 @@
 let loaded = false;
-let host = "https://cors-anywhere.herokuapp.com/";
+// let host = "https://cors-anywhere.herokuapp.com/";
 // let host = "http://vyst.rocket-air.com:8123/proxy?url=";
+let host = "https://pscscoding.com/proxy.php?url=";
 
 Vue.component('tag-selector', {
     props: ['users'],
@@ -125,7 +126,7 @@ let app = new Vue({
             let promiseList = [];
 
             for (let k = 0; k < RSS.length; k++) {
-                promiseList.push(axios.get(host + RSS[k]).then(response => {
+                promiseList.push(axios.get(host + encodeURIComponent(RSS[k])).then(response => {
                     let parser = new DOMParser();
                     let xmlDoc = parser.parseFromString(response.data, "text/xml");
                     let items = xmlDoc.getElementsByTagName("item");
@@ -193,7 +194,7 @@ let app = new Vue({
 
         },
         updateLog: function () {
-            axios.get(host + "https://github.com/coderLads/malTrackerGo/commits/master.atom").then(response => {
+            axios.get(host + encodeURIComponent("https://github.com/coderLads/malTrackerGo/commits/master.atom")).then(response => {
                 let parser = new DOMParser();
                 let xmlDoc = parser.parseFromString(response.data, "text/xml");
                 let items = xmlDoc.getElementsByTagName("entry");
