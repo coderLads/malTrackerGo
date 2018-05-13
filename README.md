@@ -1,5 +1,5 @@
 # malTrackerGo
-A simple electron app for keeping track of what your friends are watching on MyAnimeList. The web version is available [here](coderLads.github.io/malTrackerGo).
+A simple electron app for keeping track of what your friends are watching on MyAnimeList. The web version is available [here](https://coderLads.github.io/malTrackerGo).
 
 
 ### installation
