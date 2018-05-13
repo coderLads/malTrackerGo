@@ -53,6 +53,10 @@ input {
     display: none;
 }
 
+.blur {
+    transition: filter 0.5s;
+}
+
 .tag-selector {
     width: 770px;
     height: auto;
