@@ -130,6 +130,12 @@ div.tagsinput div {
     display: none;
 }
 
+#settings,
+label,
+.filter-box {
+    cursor: pointer;
+}
+
 button {
     margin-top: 15px;
     height: 30px;
