@@ -138,6 +138,8 @@ div.tagsinput div {
     vertical-align: bottom;
     float: left;
     margin-top: 0;
+    height: 30px;
+    width: 30px;
 }
 
 button {
@@ -176,6 +178,10 @@ button:focus {
     text-align: center;
     margin-top: 15px;
     font-size: 20px;
+}
+
+.title-label {
+    width: 270px;
 }
 
 .settings-control {
