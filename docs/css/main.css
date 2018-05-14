@@ -85,6 +85,7 @@ div.tagsinput span.tag {
     border: 1px solid var(--text);
     line-height: 2.35;
     border-radius: var(--corners);
+    margin-bottom: 5px;
 }
 
 div.tagsinput span.tag a {
