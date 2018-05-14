@@ -130,10 +130,14 @@ div.tagsinput div {
     display: none;
 }
 
-#settings,
-label,
-.filter-box {
+.pointer {
     cursor: pointer;
+}
+
+#settings-close {
+    vertical-align: bottom;
+    float: left;
+    margin-top: 0;
 }
 
 button {

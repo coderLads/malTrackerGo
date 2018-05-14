@@ -43,7 +43,7 @@ Vue.component('tag-selector', {
 });
 
 Vue.component('settings', {
-    template: `<button @click="toggle" class="button" id="settings"><i data-feather="settings"></i></button>`,
+    template: `<button @click="toggle" class="button pointer" id="settings"><i id='settings-icon' data-feather="settings"></i></button>`,
     methods: {
         toggle: function () {
             $($(".settings-pane")[0]).toggle('drop', {
@@ -61,6 +61,10 @@ Vue.component('settings', {
             document.getElementById("color2").jscolor.fromString(this.$root.color2);
         }
     }
+});
+
+Vue.component('settings-close', {
+    template: `<button @click='$root.closeAndSaveSettings' class="button pointer" id="settings-close"><i id='settings-close-icon' data-feather="x"></i></button>`
 });
 
 Vue.component('feed-item', {
@@ -233,41 +237,7 @@ let app = new Vue({
             //function to close .settings-pane when it is visible and clicked outside of
             $(document).mouseup(function (e) {
                 if ($('.settings-cover').is(e.target)) {
-                    $('.settings-pane').toggle('drop', {
-                        direction: 'right'
-                    });
-                    $($(".settings-cover")[0]).toggle('fade');
-                    $(".blur").css({
-                        filter: "none"
-                    });
-                    $('body').css({
-                        overflow: "auto"
-                    });
-
-                    self.filtered = [];
-
-                    $("#plan").prop("checked") ? true : self.filtered.push("Plan to Watch");
-                    $("#watch").prop("checked") ? true : self.filtered.push("Watching");
-                    $("#hold").prop("checked") ? true : self.filtered.push("On-Hold");
-                    $("#drop").prop("checked") ? true : self.filtered.push("Dropped");
-                    $("#complete").prop("checked") ? true : self.filtered.push("Completed");
-                    $("#rewatch").prop("checked") ? true : self.filtered.push("Re-Watching");
-
-                    Cookies.set("filtered", self.filtered.join(","));
-
-                    // reload feed
-                    self.populateFeed();
-
-                    // apply and save colors
-                    self.color1 = "#" + $('#color1').val();
-                    self.color2 = "#" + $('#color2').val();
-                    Cookies.set("color1", "#" + $('#color1').val());
-                    Cookies.set("color2", "#" + $('#color2').val());
-                    let html = document.getElementsByTagName('html')[0];
-                    html.style.setProperty("--background-one", self.color1);
-                    html.style.setProperty("--background-two", self.color2);
-
-                    self.$root.generateFavicon("#" + $('#color1').val(), "#" + $('#color2').val());
+                    self.$root.closeAndSaveSettings();
                 }
             });
         },
@@ -310,6 +280,43 @@ let app = new Vue({
                 }).catch(function (e) {
                     link.href = '../images/icon.png';
                 });
+        },
+        closeAndSaveSettings: function () {
+            $('.settings-pane').toggle('drop', {
+                direction: 'right'
+            });
+            $($(".settings-cover")[0]).toggle('fade');
+            $(".blur").css({
+                filter: "none"
+            });
+            $('body').css({
+                overflow: "auto"
+            });
+
+            this.filtered = [];
+
+            $("#plan").prop("checked") ? true : this.filtered.push("Plan to Watch");
+            $("#watch").prop("checked") ? true : this.filtered.push("Watching");
+            $("#hold").prop("checked") ? true : this.filtered.push("On-Hold");
+            $("#drop").prop("checked") ? true : this.filtered.push("Dropped");
+            $("#complete").prop("checked") ? true : this.filtered.push("Completed");
+            $("#rewatch").prop("checked") ? true : this.filtered.push("Re-Watching");
+
+            Cookies.set("filtered", this.filtered.join(","));
+
+            // reload feed
+            this.populateFeed();
+
+            // apply and save colors
+            this.color1 = "#" + $('#color1').val();
+            this.color2 = "#" + $('#color2').val();
+            Cookies.set("color1", "#" + $('#color1').val());
+            Cookies.set("color2", "#" + $('#color2').val());
+            let html = document.getElementsByTagName('html')[0];
+            html.style.setProperty("--background-one", this.color1);
+            html.style.setProperty("--background-two", this.color2);
+
+            this.generateFavicon("#" + $('#color1').val(), "#" + $('#color2').val());
         }
     },
     beforeMount() {
