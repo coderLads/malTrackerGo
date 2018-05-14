@@ -209,10 +209,16 @@ button:focus {
 }
 
 .jscolor {
-    width: 128px;
-    border: none;
-    border-radius: var(--corners);
-    padding: 0px 2px;
+    height: 15px;
+    padding: 15px 15px;
+    margin: 4px 0;
+    box-sizing: border-box;
+    border-radius: 25px;
+    background-color: #fff;
+}
+
+.jscolor:focus {
+    outline: none;
 }
 
 .feed-container {
