@@ -49,7 +49,7 @@ Vue.component('settings', {
             $($(".settings-pane")[0]).toggle('drop', {
                 direction: 'right'
             });
-            $($(".settings-cover")[0]).toggle('fade');
+            $($(".pane-cover")[0]).toggle('fade');
             $(".blur").css({
                 filter: "blur(2px) brightness(90%)"
             });
@@ -63,8 +63,30 @@ Vue.component('settings', {
     }
 });
 
+Vue.component('info', {
+    template: `<button @click="toggle" class="button pointer" id="info"><i id='info-icon' data-feather="info"></i></button>`,
+    methods: {
+        toggle: function () {
+            $($(".info-pane")[0]).toggle('drop', {
+                direction: 'right'
+            });
+            $($(".pane-cover")[0]).toggle('fade');
+            $(".blur").css({
+                filter: "blur(2px) brightness(90%)"
+            });
+            $('body').css({
+                overflow: "hidden"
+            });
+        }
+    }
+});
+
 Vue.component('settings-close', {
     template: `<button @click='$root.closeAndSaveSettings' class="button pointer" id="settings-close"><i id='settings-close-icon' data-feather="x"></i></button>`
+});
+
+Vue.component('info-close', {
+    template: `<button @click='$root.closeInfo' class="button pointer" id="info-close"><i id='info-close-icon' data-feather="x"></i></button>`
 });
 
 Vue.component('feed-item', {
@@ -236,8 +258,13 @@ let app = new Vue({
 
             //function to close .settings-pane when it is visible and clicked outside of
             $(document).mouseup(function (e) {
-                if ($('.settings-cover').is(e.target)) {
-                    self.$root.closeAndSaveSettings();
+                if ($('.pane-cover').is(e.target)) {
+                    if ($(".settings-pane").css('display') != 'none') {
+                        self.$root.closeAndSaveSettings();
+                    }
+                    if ($(".info-pane").css('display') != 'none') {
+                        self.$root.closeInfo();
+                    }
                 }
             });
         },
@@ -285,7 +312,7 @@ let app = new Vue({
             $('.settings-pane').toggle('drop', {
                 direction: 'right'
             });
-            $($(".settings-cover")[0]).toggle('fade');
+            $($(".pane-cover")[0]).toggle('fade');
             $(".blur").css({
                 filter: "none"
             });
@@ -317,6 +344,18 @@ let app = new Vue({
             html.style.setProperty("--background-two", this.color2);
 
             this.generateFavicon("#" + $('#color1').val(), "#" + $('#color2').val());
+        },
+        closeInfo: function () {
+            $('.info-pane').toggle('drop', {
+                direction: 'right'
+            });
+            $($(".pane-cover")[0]).toggle('fade');
+            $(".blur").css({
+                filter: "none"
+            });
+            $('body').css({
+                overflow: "auto"
+            });
         }
     },
     beforeMount() {

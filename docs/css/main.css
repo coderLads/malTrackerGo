@@ -54,7 +54,7 @@ input {
 }
 
 .tag-selector {
-    width: 770px;
+    width: 740px;
     height: auto;
     margin: auto;
     display: flex;
@@ -143,6 +143,14 @@ div.tagsinput div {
     width: 30px;
 }
 
+#info-close {
+    vertical-align: bottom;
+    float: left;
+    margin-top: 0;
+    height: 30px;
+    width: 30px;
+}
+
 button {
     margin-top: 15px;
     height: 30px;
@@ -157,7 +165,7 @@ button:focus {
     outline: 0;
 }
 
-.settings-cover {
+.pane-cover {
     position: absolute;
     top: 0;
     left: 0;
@@ -165,7 +173,8 @@ button:focus {
     width: calc(100% - 300px);
 }
 
-.settings-pane {
+.settings-pane,
+.info-pane {
     position: fixed;
     min-height: 100%;
     width: 300px;
@@ -175,7 +184,7 @@ button:focus {
     color: var(--text);
 }
 
-.settings-title {
+.pane-title {
     text-align: center;
     margin-top: 15px;
     font-size: 20px;
@@ -185,7 +194,7 @@ button:focus {
     width: 270px;
 }
 
-.settings-control {
+.pane-control {
     margin: 0px 15px;
     margin-top: 15px;
     display: flex;

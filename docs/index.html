@@ -53,20 +53,23 @@
     <div id="app">
         <nav class="blur">
             <tag-selector></tag-selector>
+            <info></info>
             <settings></settings>
             <div id="update"></div>
         </nav>
         <main class="blur">
             <feed-container></feed-container>
         </main>
-        <div class="settings-cover" style="display:none"></div>
+        <!-- Thing to cover the rest of the page when a pane is open -->
+        <div class="pane-cover" style="display:none"></div>
+        <!-- Pane for the settings  -->
         <div class="settings-pane" style="display:none">
-            <div class="settings-content">
-                <div class="settings-title">
+            <div class="pane-content">
+                <div class="pane-title">
                     <settings-close></settings-close>
                     <div class="title-label"> Settings </div>
                 </div>
-                <div class="settings-control">
+                <div class="pane-control">
                     <div>
                         <p>Filter:</p>
                         <div>
@@ -105,6 +108,16 @@
                         <input type="text" id="color2" class="jscolor" />
                     </div>
                 </div>
+            </div>
+        </div>
+        <!-- Pane for all of the stats and such -->
+        <div class="info-pane" style="display:none">
+            <div class="pane-content">
+                <div class="pane-title">
+                    <info-close></info-close>
+                    <div class="title-label"> Settings </div>
+                </div>
+                <div class="pane-control">Info goes here eh</div>
             </div>
         </div>
     </div>
