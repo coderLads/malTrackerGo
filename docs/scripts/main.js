@@ -106,6 +106,8 @@ Vue.component('feed-item', {
                 $(self.$el).find(".image").css({
                     "background-image": 'url(' + response.data['image_url'] + ')'
                 });
+            }).catch(error => {
+                console.log(error.response);
             });
         }
     },
